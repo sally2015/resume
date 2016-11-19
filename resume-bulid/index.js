@@ -72,6 +72,10 @@ var tree = {
 			}
 		},
 		"type":"folder"
+	},
+	".gitignore":{
+		"type":"file",
+		"content":"node_modules"
 	}
 }
 var filename = "resume-code";
@@ -98,17 +102,14 @@ function interval(attr, obj,button) {
 		}
 		lastRoot = path.resolve(lastRoot + './../' )
 
-		
 	}else if ( obj.sub && isEmptyObject(obj.sub) && obj.type === 'folder' ) {
 		fs.mkdirSync( lastRoot);
 		lastRoot = path.resolve(lastRoot + './../' )
 
 	}else if(!obj.sub && obj.type === 'file' ){
-		fs.writeFileSync(lastRoot, function(err) {
-		    if(err) {
-		        return console.log(err);
-		    }
-		});
+		var content = obj.content ? obj.content : "";
+		console.log(content)
+		fs.writeFileSync(lastRoot, content);
 	}
 
 }
