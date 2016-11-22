@@ -1,0 +1,95 @@
+body {
+	min-width: 1400px;
+	min-height: 900px;
+	margin: 0;
+	background: #fff;
+	line-height: 1;
+	font-family: 'Lantinghei SC', 'Helvetica Neue', 'Microsoft YaHei', SimSun, Verdana, Arial;
+	font-size: 14px;
+	color: #4A4A4A;
+	word-wrap: break-word;
+}
+@media (min-width: 1440px) {
+	body { min-width: 1380px; }
+}
+h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, input, td, th { margin: 0; padding: 0; }
+h1, h2, h3, h4, h5, h6 { font-weight: normal; font-size: inherit; }
+li { list-style-type: none; }
+img { border: none; vertical-align: top; }
+a { color: #4A90E2; text-decoration: none; }
+a:hover { color: #4A90E2; text-decoration: none; }
+a.link:hover { text-decoration: underline; }
+input {
+	color: #4A4A4A;
+	border-radius: 0;
+	font-family: inherit;
+	line-height: inherit;
+}
+input:focus { outline: none; }
+input[type=submit], input[type=button] { border: none; }
+button { font-family: 'Lantinghei SC', 'Helvetica Neue', 'Microsoft YaHei', SimSun, Verdana, Arial; }
+
+::-webkit-input-placeholder { /* WebKit browsers */
+	color:#c8c8c8;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color:#c8c8c8;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+	color:#c8c8c8;
+}
+
+/* 解决Chrome文本框自动填充后显示黄色背景问题 */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0 1000px white inset;
+}
+table{
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+/* 美化webkit浏览器的滚动条 */
+.webkit-scrollbar::-webkit-scrollbar {
+	width: 9px;
+	height: 9px
+}
+
+.webkit-scrollbar::-webkit-scrollbar-track {
+	border-radius: 8px;
+	background-color: rgba(0,0,0,0);
+}
+
+.webkit-scrollbar::-webkit-scrollbar-track:hover {
+	background-color: rgba(0,0,0,0.06);
+	-webkit-box-shadow: -2px 0 0 #fff inset,1px 0 0 rgba(255,255,255,0.9) inset,0 -1px 0 rgba(255,255,255,0.9) inset,0 1px 0 rgba(255,255,255,0.9) inset
+}
+
+.webkit-scrollbar::-webkit-scrollbar-track:active {
+	background-color: rgba(0,0,0,0.1)
+}
+
+.webkit-scrollbar::-webkit-scrollbar-thumb {
+	border-radius: 8px;
+	background-color: rgba(0,0,0,0.1);
+	-webkit-box-shadow: -2px 0 0 #fff inset,1px 0 0 #fff inset,0 -1px 0 rgba(255,255,255,0.9) inset,0 1px 0 rgba(255,255,255,0.9) inset;
+}
+
+.webkit-scrollbar::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(0,0,0,0.4)
+}
+
+.webkit-scrollbar::-webkit-scrollbar-thumb:active {
+	background: rgba(0,0,0,0.6)
+}
+
+
+/* 解决点击时带虚边或实色边的问题 */
+:focus {
+	-moz-outline-style: none;
+	text-decoration: none;
+	outline: none;
+}
+

@@ -1,0 +1,30 @@
+var app = require('../app');
+var http = require('http');
+
+var port = normalizePort(require('../config').port);
+app.set('port', port);
+
+var server = http.createServer(app);
+
+server.listen(port);
+server.on('error', function(err) {
+	console.log(err);
+});
+server.on('listening', function() {
+	var addr = server.address();
+	console.log('listening' + addr.port);
+});
+
+function normalizePort(val) {
+	var port = parseInt(val, 10);
+
+	if (isNaN(port)) {
+		return val;
+	}
+
+	if (port >= 0) {
+		return port;
+	}
+
+	return false;
+}
