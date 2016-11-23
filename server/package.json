@@ -1,5 +1,6 @@
 {
   "name": "resume",
+  "version": "1.0",
   "description": "resume server",
   "scripts": {
     "start": "node ./bin/www"
