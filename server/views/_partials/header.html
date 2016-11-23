@@ -5,14 +5,18 @@
 			<h1 class="logo">logo</h1>
 		</div>
 		<nav class="header-section__nav">
-
-			<ul class="nav clearfix">
+			<ul class="nav clearfix" v-if="isIndexNav">
 				<li class="nav-item">
 					<a class="nav-link" href="#">首页{{testData}}</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link active"href="#">在线制作</a>
 				</li>		
+			</ul>
+			<ul class="nav clearfix" v-else="isIndexNav">
+				<li class="nav-item">
+					<a class="nav-link" href="#">返回上一页</a>
+				</li>	
 			</ul>
 		</nav>
 		<div class="header-section__right">
