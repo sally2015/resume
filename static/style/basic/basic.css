@@ -16,8 +16,8 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, input, td, th { margin: 0; pa
 h1, h2, h3, h4, h5, h6 { font-weight: normal; font-size: inherit; }
 li { list-style-type: none; }
 img { border: none; vertical-align: top; }
-a { color: #4A90E2; text-decoration: none; }
-a:hover { color: #4A90E2; text-decoration: none; }
+a { color: #4A4A4A; text-decoration: none; }
+a:hover { color: #00c091; text-decoration: none; }
 a.link:hover { text-decoration: underline; }
 input {
 	color: #4A4A4A;
@@ -91,5 +91,20 @@ table{
 	-moz-outline-style: none;
 	text-decoration: none;
 	outline: none;
+}
+.clearfix:after{
+	display: block;
+	content:'';
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.boundary{
+	width: 1200px;
+	margin:0 auto;
+}
+.err-text{
+	color:#fc411b;
 }
 

@@ -1,0 +1,15 @@
+{{extend ('./basic')}}
+
+{{#block ('beforeStyle') }}
+	{{{ importCSS('/style/basic/normal.css') }}}
+{{/block}}
+
+{{#block ('body')}}
+
+<div id="app">
+	<v-header></v-header>
+	{{ include('../_partials/header.html') }}
+	{{{ block ('main')}}}
+</div>
+<script>require('/page/common/')</script>
+{{/block}}

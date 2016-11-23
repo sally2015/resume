@@ -1,0 +1,40 @@
+body{
+	background: #f5f7f9;
+}
+/* 头部导航 */
+.header-section{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 70px;
+	background:#fff;
+	line-height: 70px;
+	font-size: 16px;
+}
+.header-section__left,
+.header-section__right{
+	position: absolute;
+	top: 0;
+	width: 200px;
+	text-align: center;
+}
+.header-section__left{
+	left: 0;
+}
+.header-section__nav{
+	margin: 0 200px;
+}
+.header-section__nav .nav-item{
+	float: left;
+	padding: 0 20px;
+}
+.header-section__nav .nav-link{
+	display: block;
+}
+.header-section__nav .nav-link.active{
+	color:#00c091;
+}
+.header-section__right{
+	right: 0;
+}

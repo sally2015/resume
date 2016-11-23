@@ -6,6 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
 <title>{{#if (pageTitle)}}{{ pageTitle }}{{/if}}</title>
 {{{ importCSS('/style/basic/basic.css') }}}
+{{{ block ('beforeStyle') }}}
 {{{ block('style') }}}
 {{{ importJS('/js/bowljs/1.1.x/bowl.js') }}}
 {{{ importJS('/config/bowl-config.js') }}}
@@ -15,7 +16,7 @@
 <body>
 
 {{ block('body') }}
-{{ block('beforebodyEnd') }}
+{{{ block('beforebodyEnd') }}}
 </body>
 </html>
 	

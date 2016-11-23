@@ -1,6 +1,30 @@
 {{ set (pageTitle = headerTitle) }}
 
-{{ extend ('./_layouts/basic') }}
-	<p>{{ info.message }}</p>
-{{#block ('body') }}
+{{ extend ('./_layouts/normal') }}
+
+{{#block ('style') }}
+	<style>
+		body{
+			position: relative
+		}
+		.err-text{
+			position:absolute;
+			top:50%;
+			left:50%;
+			transform: translate(-50%,-100%);
+			text-align: center;
+			font-size:50px;
+		}
+		
+	</style>
+{{/block}}
+
+{{#block ('main') }}
+	<h1 class="boundary err-text">{{ info.message }}</h1>
+{{/block}}
+
+{{#block('beforebodyEnd')}}
+<script>
+	require('/page/info/')
+</script>
 {{/block}}
