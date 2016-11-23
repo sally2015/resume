@@ -3,20 +3,20 @@
 {{ extend ('./_layouts/normal') }}
 
 {{#block ('style') }}
-	<style>
-		body{
-			position: relative
-		}
-		.err-text{
-			position:absolute;
-			top:50%;
-			left:50%;
-			transform: translate(-50%,-100%);
-			text-align: center;
-			font-size:50px;
-		}
-		
-	</style>
+<style>
+	body{
+		position: relative
+	}
+	.err-text{
+		position:absolute;
+		top:50%;
+		left:50%;
+		transform: translate(-50%,-60%);
+		text-align: center;
+		font-size:50px;
+	}
+	
+</style>
 {{/block}}
 
 {{#block ('main') }}
@@ -24,7 +24,5 @@
 {{/block}}
 
 {{#block('beforebodyEnd')}}
-<script>
-	require('/page/info/')
-</script>
+<script>require('/page/info/')</script>
 {{/block}}
