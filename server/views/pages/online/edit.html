@@ -1,0 +1,18 @@
+{{ set (pageTitle = '模板编辑') }}
+
+{{ extend ('../../_layouts/normal') }}
+
+{{#block ('style') }}
+	{{{ importCSS('/style/online/edit.css') }}}
+{{/block}}
+
+{{#block ('main') }}
+	<div class="resume-section">
+		<v-topbar></topbar>
+	</div>
+	{{ include('./_partials/edit_topbar.html') }}
+{{/block}}
+
+{{#block('beforebodyEnd')}}
+<script>require('/page/online/edit')</script>
+{{/block}}

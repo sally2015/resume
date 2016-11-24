@@ -1,0 +1,29 @@
+{{ set (pageTitle = '首页') }}
+
+{{ extend ('../../_layouts/normal') }}
+
+{{#block ('style') }}
+<style>
+	body{
+		position: relative
+	}
+	.correct-text{
+		position:absolute;
+		top:50%;
+		left:50%;
+		transform: translate(-50%,-60%);
+		text-align: center;
+		font-size:50px;
+		color: green;
+	}
+	
+</style>
+{{/block}}
+
+{{#block ('main') }}
+	<h1 class="boundary correct-text">我不是404了，我是首页</h1>
+{{/block}}
+
+{{#block('beforebodyEnd')}}
+<script>require('/page/info/')</script>
+{{/block}}

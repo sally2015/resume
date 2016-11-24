@@ -86,7 +86,7 @@ var BasicRouteHelper = util.createClass(function(template) {
 	 * @for BasicRouteHelper
 	 * @param {Object} res Response对象
 	 */
-	render: function(res) {
+	render: function(res, template) {
 	 	this._rendered = true;
 	 	res.end();
 	},

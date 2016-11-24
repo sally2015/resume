@@ -1,0 +1,19 @@
+<script type="x-template" id="tpl-topbar">
+<div class="topbar-section clearfix">
+	<ul class="topbar-section__left">
+		<li class="topbar-section__left__item">
+			模板编号：<span class="common-green">{{ tplData.tplNum }}</span>
+		</li>
+		<li class="topbar-section__left__item">
+			使用人数：<span class="common-green">{{ tplData.users }}</span>
+		</li>
+		<li class="topbar-section__left__item">
+			仅支持PDF下载
+		</li>
+	</ul>
+	<div class="topbar-section__right">
+		<span v-for = "color in colorData" class="color-box " :class="[{ 'active': isIndex === color},'color-box__'+color]" @click="changeColor(color)"></span>
+		<span class="tpl-btn__change common-green">更换模板</span>
+	</div>
+</div>
+</script>

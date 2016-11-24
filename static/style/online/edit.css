@@ -1,0 +1,43 @@
+.resume-section{
+	width: 1200px;
+	margin: 30px auto;
+}
+.topbar-section{
+	height: 60px;
+	line-height: 60px;
+	padding: 0 20px;
+	background: #fff;
+}
+.topbar-section__left{
+	float: left;
+}
+.topbar-section__left__item{
+	display: inline-block;
+	padding-right:40px;
+}
+.topbar-section__right{
+	float: right;
+}
+.color-box{
+	display: inline-block;
+	box-sizing: border-box;
+	width:20px;
+	height:20px;
+	margin-left: 4px;
+	vertical-align: text-top;
+	border-radius: 3px;
+	cursor: pointer;
+}
+.color-box.active{
+	border: 2px solid #000;
+}
+.color-box__blue{
+	background: #4A86B9;
+}
+.color-box__green{
+	background: #45BBAE;
+}
+.color-box__brown{
+	background: #A79D91;
+	margin-right: 20px;
+}
