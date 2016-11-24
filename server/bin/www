@@ -12,7 +12,8 @@ server.on('error', function(err) {
 });
 server.on('listening', function() {
 	var addr = server.address();
-	console.log('listening' + addr.port);
+	//加了个空格
+	console.log('listening ' + addr.port);
 });
 
 function normalizePort(val) {
