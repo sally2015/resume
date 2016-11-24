@@ -6,10 +6,12 @@ module.exports = function(express, app){
 		routeHelper = require('./route-helper'),
 		routes = requireDir('./pages');
 
+		//处理对应页面的路由
+		
 
 		// 404 error
 		app.use(function(req, res, next){
-			var err = new Error("404 访问的页面不存在");
+			var err = new Error("404  访问的页面不存在");
 			err.status = 404;
 
 			res.routeHelper = new routeHelper.HTMLRouteHelper();
