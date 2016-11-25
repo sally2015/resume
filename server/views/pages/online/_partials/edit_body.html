@@ -1,0 +1,14 @@
+{{%
+<script type="x-template" id="tpl-body">
+	<div class="resume-eidt-section__body">
+			<div class="resume-eidt-section__body__basic common-bg__blue">
+				<div class="resume-eidt-section__body__basic__name">
+					<span class="resume-eidt-section__body__basic__name__layout"><input type="text" class="edit-input" v-model="basicName"></span>
+				</div>
+				<div class="resume-eidt-section__body__basic__contact">
+					<span v-for="(index, itemName) in contactList" :class="['resume-eidt-section__body__basic__'+ itemName+'__layout']"><input type="text" class="edit-input" v-model="contactList[itemName]"></span>
+				</div>
+			</div>
+		</div>
+</script>
+%}}

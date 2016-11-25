@@ -1,24 +1,24 @@
-.resume-section{
+.resume-eidt-section{
 	width: 1200px;
 	margin: 30px auto;
 }
-.topbar-section{
+.resume-eidt-section__topbar{
 	height: 60px;
 	line-height: 60px;
 	padding: 0 20px;
 	background: #fff;
 }
-.topbar-section__left{
+.resume-eidt-section__topbar__left{
 	float: left;
 }
-.topbar-section__left__item{
+.resume-eidt-section__topbar__left__item{
 	display: inline-block;
 	padding-right:40px;
 }
-.topbar-section__right{
+.resume-eidt-section__topbar__right{
 	float: right;
 }
-.color-box{
+.resume-eidt-section__topbar__color-box{
 	display: inline-block;
 	box-sizing: border-box;
 	width:20px;
@@ -28,16 +28,41 @@
 	border-radius: 3px;
 	cursor: pointer;
 }
-.color-box.active{
+.resume-eidt-section__topbar__color-box.active{
 	border: 2px solid #000;
 }
-.color-box__blue{
+.resume-eidt-section__topbar__color-box__blue{
 	background: #4A86B9;
 }
-.color-box__green{
+.resume-eidt-section__topbar__color-box__green{
 	background: #45BBAE;
 }
-.color-box__brown{
+.resume-eidt-section__topbar__color-box__brown{
 	background: #A79D91;
 	margin-right: 20px;
+}
+.resume-eidt-section__body__basic{
+	padding:40px;
+}
+.resume-eidt-section__body__basic__name,
+.resume-eidt-section__body__basic__contact{
+	display: inline-block;
+	vertical-align: top;
+}
+.resume-eidt-section__body__basic__name__layout{
+	display: inline-block;
+	text-align: center;
+	width: 290px;
+	height: 70px;
+	line-height: 70px;
+}
+.resume-eidt-section__body__basic__name__layout input{
+	font-size: 48px;
+	font-weight: bold;
+}
+.resume-eidt-section__body__basic__contact span{
+	display:block;
+	width: 300px;
+	height:26px;
+
 }
