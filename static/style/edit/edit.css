@@ -41,13 +41,32 @@
 	background: #A79D91;
 	margin-right: 20px;
 }
-.resume-eidt-section__body__basic{
+.resume-eidt-section__body{
+	margin-top: 10px;
+}
+.resume-eidt-section__body__modules{
 	padding:40px;
+	background: #fff;
+	margin-bottom: 2px;
+}
+.resume-eidt-section__body__modules__item{
+	display: inline-block;
+	vertical-align: top;
 }
 .resume-eidt-section__body__basic__name,
 .resume-eidt-section__body__basic__contact{
 	display: inline-block;
 	vertical-align: top;
+}
+.resume-eidt-section__body__modules__title{
+	width: 290px;
+	line-height: 70px;
+	font-size: 36px;
+	font-weight: bold;
+}
+.resume-eidt-section__body__modules__title input{
+	font-size: 48px;
+	font-weight: normal;
 }
 .resume-eidt-section__body__basic__name__layout{
 	display: inline-block;
@@ -65,4 +84,17 @@
 	width: 300px;
 	height:26px;
 
+}
+.resume-eidt-section__body__modules__content__first-row{
+	padding-bottom: 10px;
+}
+.resume-eidt-section__body__modules__content__first-row__layout{
+	width:200px;
+	height:26px;
+	padding-right: 20px;
+	display:inline-block;
+}
+
+.resume-eidt-section__footer{
+	height:40px;
 }

@@ -3,18 +3,22 @@
 {{ extend ('../../_layouts/normal') }}
 
 {{#block ('style') }}
-	{{{ importCSS('/style/online/edit.css') }}}
+	{{{ importCSS('/style/edit/edit.css') }}}
 {{/block}}
 
 {{#block ('main') }}
-	<div class="resume-eidt-section" id="resume">
+	<div class="resume-eidt-section">
 		<v-topbar></v-topbar>		
 		<v-body></v-body>
+		<footer class="resume-eidt-section__footer" 
+		:class=" ['common-bg__'+currentBasicBg]">
+		</footer>
 	</div>
-	{{ include('./_partials/edit_topbar.html') }}
-	{{ include('./_partials/edit_body.html') }}
-{{/block}}
 
+{{/block}}
+	
 {{#block('beforebodyEnd')}}
+{{ include('./_partials/edit_topbar.html') }}
+{{ include('./_partials/edit_body.html') }}
 <script>require('/page/edit/')</script>
 {{/block}}

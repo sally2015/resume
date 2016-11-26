@@ -13,8 +13,14 @@ body{
 .common-bg__brown{
 	background: #A79D91 !important;
 }
+.common-text__blue{
+	color: #4A86B9 !important;
+}
 .common-text__green{
-	color: #00c091;
+	color: #45BBAE !important;
+}
+.common-text__brown{
+	color: #A79D91 !important;
 }
 /* 头部导航 */
 .header-section{
@@ -57,9 +63,6 @@ body{
 }
 /* 底部导航 */
 .footer-section{
-	position: fixed;
-	bottom: 0;
-	left: 0;
 	width: 100%;
 	height: 50px;
 	background: rgba(0,0,0,0.7);
@@ -86,16 +89,22 @@ body{
 	height: 100%;
 	line-height: 26px;
 	font-size: 16px;
+	box-sizing:border-box;
 	border:none;
 	background:transparent;
+}
+.edit-textarea{
+	height:auto;
+	overflow-x:visible; 
+	overflow-y:visible
 }
 .edit-input:focus,
 .edit-textarea:focus{
 	border: 1px solid #60d5ba;
 	
 }
-.common-bg__blue .edit-input,
-.common-bg__green .edit-input,
-.common-bg__brown .edit-input{
+.resume-eidt-section__body__modules.common-bg__blue .edit-input,
+.resume-eidt-section__body__modules.common-bg__green .edit-input,
+.resume-eidt-section__body__modules.common-bg__brown .edit-input{
 	color: #fff;
 }
