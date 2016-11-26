@@ -10,12 +10,11 @@
 	<div class="resume-eidt-section" id="resume">
 		<v-topbar></v-topbar>		
 		<v-body></v-body>
-		
 	</div>
 	{{ include('./_partials/edit_topbar.html') }}
 	{{ include('./_partials/edit_body.html') }}
 {{/block}}
 
 {{#block('beforebodyEnd')}}
-<script>require('/page/online/edit')</script>
+<script>require('/page/edit/')</script>
 {{/block}}

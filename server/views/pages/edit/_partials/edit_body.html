@@ -1,7 +1,7 @@
 {{%
 <script type="x-template" id="tpl-body">
 	<div class="resume-eidt-section__body">
-			<div class="resume-eidt-section__body__basic common-bg__blue">
+			<div class="resume-eidt-section__body__basic" :class=" ['common-bg__'+currentBasicBg]">
 				<div class="resume-eidt-section__body__basic__name">
 					<span class="resume-eidt-section__body__basic__name__layout"><input type="text" class="edit-input" v-model="basicName"></span>
 				</div>
