@@ -11,26 +11,27 @@
 			</div>
 			<div v-for="(item, itemName) in moduleList" class="resume-eidt-section__body__modules resume-eidt-section__body__modules__education">
 				<div class="resume-eidt-section__body__modules__item resume-eidt-section__body__modules__title">
-					<span class="resume-eidt-section__body__modules__education__title__layout" :class=" ['common-text__'+currentBasicBg]">
-						{{item.title}}
+					<span class="resume-eidt-section__body__modules__education__title__layout" >
+						<input type="text" v-model="item.title"  class="edit-input" :class=" ['common-text__'+currentBasicBg]">
 					</span>
 				</div>
 				<div class="resume-eidt-section__body__modules__item resume-eidt-section__body__modules__content">
 					<div class="resume-eidt-section__body__modules__content__first-row">
 						<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.arr.time" >
-							<input type="text" v-model="item.arr.time" placeholder="教育时间" class="edit-input" >
+							<input type="text" v-model="item.arr.time"  class="edit-input" >
 						</span>
 						<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.arr.name">
-							<input type="text" v-model="item.arr.name"  placeholder="学校" class="edit-input">
+							<input type="text" v-model="item.arr.name" class="edit-input">
 						</span>
 						<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.arr.name">
-							<input type="text" v-model="item.arr.others" placeholder="专业" class="edit-input">
+							<input type="text" v-model="item.arr.others"  class="edit-input">
 						</span>
 					</div>
 					<div class="resume-eidt-section__body__modules__content__second-row">
-						<span class="resume-eidt-section__body__modules__content__second-row__layout">
-							<textarea class="edit-textarea" v-model="item.arr.des" placeholder="这里写在校描述"></textarea>
-							</span>
+						<div class="expandingArea resume-eidt-section__body__modules__content__second-row__layout">
+							<pre class="div-pre">{{item.arr.des}}<br></pre>
+						    <textarea class="edit-textarea" placeholder="输入文字" v-model="item.arr.des"></textarea>
+						</div>
 					</div>
 				</div>
 			</div>

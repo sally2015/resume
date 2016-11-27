@@ -94,9 +94,8 @@ body{
 	background:transparent;
 }
 .edit-textarea{
-	height:auto;
-	overflow-x:visible; 
-	overflow-y:visible
+	min-width: 660px;
+	min-height:56px;
 }
 .edit-input:focus,
 .edit-textarea:focus{

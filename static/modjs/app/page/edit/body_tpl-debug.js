@@ -67,6 +67,10 @@ define(function(require, exports, module) { 'use strict'
 		},
 		computed: computedMix,
 		methods: {
+			replaceBr: function(value){
+				var newVal = value.replace(/\n/g,'<br>');
+				return newVal;
+			}
 		}
 	});
 	return bodyTpl;

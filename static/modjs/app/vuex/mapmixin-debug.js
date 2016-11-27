@@ -10,7 +10,7 @@ define(function (require, exports, module) { 'use strict';
 
 	var mapGetters = Vuex.mapGetters({
       getCurrentBasicBg: function(state) {
-      	  return state.getCurrentBasicBg
+      	  return state.getters.getCurrentBasicBg
       }
   });
 
