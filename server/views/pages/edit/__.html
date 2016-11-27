@@ -1,0 +1,24 @@
+{{ set (pageTitle = '模板编辑') }}
+
+{{ extend ('../../_layouts/normal') }}
+
+{{#block ('style') }}
+	{{{ importCSS('/style/edit/edit.css') }}}
+{{/block}}
+
+{{#block ('main') }}
+	<div class="resume-eidt-section">
+		<v-topbar></v-topbar>		
+		<v-body></v-body>
+		<footer class="resume-eidt-section__footer" 
+		:class=" ['common-bg__'+currentBasicBg]">
+		</footer>
+	</div>
+
+{{/block}}
+	
+{{#block('beforebodyEnd')}}
+{{ include('./_partials/edit_topbar.html') }}
+{{ include('./_partials/edit_body.html') }}
+<script>require('/page/edit/')</script>
+{{/block}}

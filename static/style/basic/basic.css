@@ -50,7 +50,9 @@ table{
     border-spacing: 0;
     border-collapse: collapse;
 }
-
+textarea{
+	resize:none;
+}
 /* 美化webkit浏览器的滚动条 */
 .webkit-scrollbar::-webkit-scrollbar {
 	width: 9px;
@@ -107,4 +109,5 @@ table{
 .err-text{
 	color:#fc411b;
 }
+
 

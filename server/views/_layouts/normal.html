@@ -5,7 +5,7 @@
 {{/block}}
 
 {{#block ('body')}}
-
+<script>require('/page/common/')</script>
 <div id="app">
 	<v-header></v-header>
 	<div class="main">
@@ -15,5 +15,5 @@
 </div>
 {{ include('../_partials/header.html') }}
 {{ include('../_partials/footer.html') }}
-<script>require('/page/common/')</script>
+
 {{/block}}

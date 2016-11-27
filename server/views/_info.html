@@ -1,6 +1,6 @@
 {{ set (pageTitle = headerTitle) }}
 
-{{ extend ('./_layouts/normal') }}
+{{ extend ('./_layouts/basic') }}
 
 {{#block ('style') }}
 <style>
@@ -19,10 +19,6 @@
 </style>
 {{/block}}
 
-{{#block ('main') }}
+{{#block ('body') }}
 	<h1 class="boundary err-text">{{ info.message }}</h1>
-{{/block}}
-
-{{#block('beforebodyEnd')}}
-<script>require('/page/info/')</script>
 {{/block}}

@@ -1,11 +1,4 @@
-/*!
- * Back2front
- * Utility functions
- */
-
-'use strict';
-
-
+define(function(require, exports, module) { 'use strict';
 /**
  * 把源对象的属性扩展到目标对象
  * @method extend
@@ -167,3 +160,4 @@ exports.compareVersion = function(a, b) {
 
 	return 0;
 };
+});

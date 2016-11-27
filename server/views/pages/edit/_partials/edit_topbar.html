@@ -1,0 +1,19 @@
+<script type="x-template" id="tpl-topbar">
+<div class="resume-eidt-section__topbar clearfix">
+	<ul class="resume-eidt-section__topbar__left">
+		<li class="resume-eidt-section__topbar__left__item">
+			模板编号：<span class="common-text__green">{{ tplData.tplNum }}</span>
+		</li>
+		<li class="resume-eidt-section__topbar__left__item">
+			使用人数：<span class="common-text__green">{{ tplData.users }}</span>
+		</li>
+		<li class="resume-eidt-section__topbar__left__item">
+			仅支持PDF下载
+		</li>
+	</ul>
+	<div class="resume-eidt-section__topbar__right">
+		<span v-for = "color in colorData" class="resume-eidt-section__topbar__color-box " :class="[{ 'active': isIndex === color},'resume-eidt-section__topbar__color-box__'+color]" @click="changeColor(color)"></span>
+		<span class="resume-eidt-section__topbar__tpl-btn__changecommon-text__green">更换模板</span>
+	</div>
+</div>
+</script>
