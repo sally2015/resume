@@ -10,7 +10,7 @@ define(function(require, exports, module) { 'use strict'
 		computed:{
 			isIndexNav: function(){
 				var href = window.location.href,
-					re = /sub/g,
+					re = /edit/g,
 					isIndexNav = re.test(href);
 				return !isIndexNav;
 			}

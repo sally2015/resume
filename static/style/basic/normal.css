@@ -39,7 +39,7 @@ body{
 .header-section__right{
 	position: absolute;
 	top: 0;
-	width: 200px;
+	width: 300px;
 	text-align: center;
 }
 .header-section__left{
@@ -60,6 +60,19 @@ body{
 }
 .header-section__right{
 	right: 0;
+}
+.header-section__right__btn{
+	float:left;
+	padding: 0 20px;
+	background-color: #00c091;
+	height: 100%;
+	color: #fff;
+	border-right: 5px solid #fff;
+	cursor: pointer;
+}
+.header-section__right__btn:hover{
+	text-decoration: underline;
+	color:#fff;
 }
 /* 底部导航 */
 .footer-section{
