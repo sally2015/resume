@@ -255,6 +255,10 @@ define(function(require, exports, module) { 'use strict'
 				this.$http.get(url).then(function(result){
                     //debugger
 				});
+			},
+			replaceBr: function(value){
+				var newVal = value.replace(/\n/g,'<br>');
+				return newVal;
 			}
 		}
 	});

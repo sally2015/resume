@@ -20,8 +20,13 @@
 				</li>	
 			</ul>
 		</nav>
-		<div class="header-section__right">
+		<div class="header-section__right" v-if="isIndexNav">
 			个人中心
+		</div>
+		<div class="header-section__right clearfix" v-else="isIndexNav">
+			<a href="#" class="header-section__right__btn">预览</a>
+			<a href="#" class="header-section__right__btn">保存</a>
+			<a href="#" class="header-section__right__btn">下载</a>
 		</div>
 	</header>
 </script>

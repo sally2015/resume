@@ -62,11 +62,11 @@
 	width: 290px;
 	line-height: 70px;
 	font-size: 36px;
-	font-weight: bold;
+
 }
 .resume-eidt-section__body__modules__title input{
-	font-size: 48px;
-	font-weight: normal;
+	font-size: 36px;
+	font-weight: bold;
 }
 .resume-eidt-section__body__basic__name__layout{
 	display: inline-block;
@@ -97,4 +97,23 @@
 
 .resume-eidt-section__footer{
 	height:40px;
+}
+.expandingArea{
+    position:relative;
+}
+.edit-textarea{
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    overflow: hidden;
+}
+.div-pre{
+    display:block;
+    visibility:hidden;
+    margin:0;
+    line-height: 26px;
+}
+.div-pre span{
+	display:block;
 }

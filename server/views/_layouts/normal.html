@@ -7,11 +7,11 @@
 {{#block ('body')}}
 <script>require('/page/common/')</script>
 <div id="app">
-	<v-header></v-header>
+	<v-header v-once></v-header>
 	<div class="main">
 		{{{ block ('main')}}}
 	</div>
-	<v-footer></v-footer>
+	<v-footer v-once></v-footer>
 </div>
 {{ include('../_partials/header.html') }}
 {{ include('../_partials/footer.html') }}
