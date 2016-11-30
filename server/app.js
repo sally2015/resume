@@ -5,7 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('./config');
+var Interface = require('./db/interface');
+
 var app = express();
+
+Interface.init(express,app,__dirname);
+
 app.set('env', process.env.NODE_ENV || "development");
 console.log('server environment: ' + app.get('env') )
 
