@@ -8,6 +8,17 @@
 				<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__contact">
 					<span v-for="(index, itemName) in contactList" :class="['resume-eidt-section__body__basic__'+ itemName+'__layout']"><input type="text" class="edit-input" v-model="contactList[itemName]"></span>
 				</div>
+				<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__photo">
+					<div class="resume-eidt-section__body__basic__photo__wrap">
+						请上传照片
+					</div>
+					<div class="resume-eidt-section__body__basic__photo__layer">
+						<span class="resume-eidt-section__body__basic__file-btn">
+							更换照片
+							<input type="file" value="更换照片">
+						</span>
+					</div>
+				</div>
 			</div>
 			<div v-for="(item, itemName) in moduleList" class="resume-eidt-section__body__modules resume-eidt-section__body__modules__education">
 				<div class="resume-eidt-section__body__modules__item resume-eidt-section__body__modules__title">

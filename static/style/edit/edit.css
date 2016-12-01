@@ -44,6 +44,9 @@
 .resume-eidt-section__body{
 	margin-top: 10px;
 }
+.resume-eidt-section__body__basic{
+	position: relative;
+}
 .resume-eidt-section__body__modules{
 	padding:40px;
 	background: #fff;
@@ -63,6 +66,49 @@
 	line-height: 70px;
 	font-size: 36px;
 
+}
+.resume-eidt-section__body__basic__photo{
+	position: absolute;
+	right: 40px;
+	top:20px;
+	width:110px;
+	height: 120px;
+	text-align: center;
+}
+.resume-eidt-section__body__basic__photo__wrap,
+.resume-eidt-section__body__basic__photo__layer{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 90%;
+	height: 100%;
+	background: #fff;
+}
+.resume-eidt-section__body__basic__photo__layer{
+	background: #e8e8e8;
+	z-index: 10;
+}
+.resume-eidt-section__body__basic__file-btn{
+	position: absolute;
+	bottom: 10px;
+	left: 0;
+	width: 100%;
+	height: 24px;
+	line-height: 24px;
+	border-radius: 6px;
+	background: #45BBAE;
+	color: #fff;
+	cursor: pointer;
+}
+.resume-eidt-section__body__basic__file-btn input{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	font-size: 0;
+	cursor: pointer;
 }
 .resume-eidt-section__body__modules__title input{
 	font-size: 36px;
