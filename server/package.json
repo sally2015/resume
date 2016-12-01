@@ -15,6 +15,8 @@
     "gulp-babel": "^6.1.2",
     "mongodb": "^2.2.11",
     "morgan": "^1.7.0",
+    "multiparty": "^4.1.2",
+    "pdfkit": "^0.8.0",
     "request": "^2.79.0",
     "require-dir": "^0.3.1",
     "serve-favicon": "^2.3.2",

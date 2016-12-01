@@ -2,6 +2,8 @@ var PATH = require('path');
 var FS = require('fs');
 var PDF = require('pdfkit');
 var DB = require('./db');
+var multiparty = require('multiparty');
+var http = require('http');
 
 //服务器路径
 var ServerPath = null;
@@ -43,7 +45,54 @@ var Interface = {
             });
 
             app.use(express.static('public'));
+            //所有文件的路径都是相对于存放目录的，因此，存放静态文件的目录名不会出现在 URL 中。
+            app.use(express.static('files'));
         });
+
+        app.post('/uploadImage',function(req,res){
+		    console.log('uploadImage...');
+
+		    var form = new multiparty.Form();
+
+		    //设置上传的默认路径
+		    form.uploadDir = PATH.join(ServerPath,'uploadTemp/'); 
+
+		    form.parse(req, function(err, fields, files) {
+		    	// var filesTmp = JSON.stringify(files,null,2);
+
+			    if(err){
+			      console.log('parse error: ' + err);
+			    } else {
+			      // console.log(fields);
+			      // console.log(files);
+			      var file = files.file[0];
+			      var oldPath = file.path;
+			      //需要对文件名编码一下
+			      var newFileName=encodeURIComponent(file.originalFilename);
+			      var newPath = PATH.join(ServerPath,'files/images/' + newFileName);
+			      //重命名为真实文件名--移动文件到新的目录下
+			      FS.rename(oldPath, newPath, function(err) {
+			        if(err){
+			          console.log('rename error: ' + err);
+			        } else {
+			          console.log('rename ok');
+			        }
+			      });
+			    }
+
+		      res.set({
+		      	'content-type': 'text/plain;charset=utf-8'
+		      });
+		      res.send({
+		      	status:200,
+		      	message:'上传成功',
+		      	url:'http://localhost:2606/images/' + newFileName
+		      });
+
+		    });
+
+		    return;
+		})
     }
 };
 
