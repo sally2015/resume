@@ -7,11 +7,16 @@ define(function (require, exports, module) { 'use strict';
 	Vue.use(Vuex);
 
 	var state = {
-		currentBasicBg: "blue"
+		currentBasicBg: "blue",
+		resumeOptions: {}
+
 	}
 	var mutations = {
 		CHANGE_BASIC_BG: function (state, color) {
 			state.currentBasicBg = color;
+		},
+		CHANGE_OPTIONS: function (state, options) {
+			state.resumeOptions = options;
 		}
 	}
 

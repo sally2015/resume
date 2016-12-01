@@ -5,22 +5,24 @@ define(function (require, exports, module) { 'use strict';
 	var mapState =  Vuex.mapState({
 	    currentBasicBg: function(state) {
 	    	return state.currentBasicBg;
-	    }
+	    },
+      resumeOptions: function(state) {
+        return state.resumeOptions;
+      }
 	});
 
-	var mapGetters = Vuex.mapGetters({
-      getCurrentBasicBg: function(state) {
-      	  return state.getters.getCurrentBasicBg
-      }
-  });
+	var mapGetters = Vuex.mapGetters(['getCurrentBasicBg','getResumeOptions']);
 
   var mapMutations = Vuex.mapMutations({
       CHANGE_BASIC_BG: function (state) {
   			  return state.CHANGE_BASIC_BG
-  		}
+  		},
+      CHANGE_OPTIONS: function (state) {
+          return state.CHANGE_OPTIONS
+      }
   });
 
-  var mapActions = Vuex.mapActions(['changeBasicBg']);
+  var mapActions = Vuex.mapActions(['changeBasicBg','changeResumeOptions']);
 
   return {
    		mapState: mapState,

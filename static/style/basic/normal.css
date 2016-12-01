@@ -61,19 +61,7 @@ body{
 .header-section__right{
 	right: 0;
 }
-.header-section__right__btn{
-	float:left;
-	padding: 0 20px;
-	background-color: #00c091;
-	height: 100%;
-	color: #fff;
-	border-right: 5px solid #fff;
-	cursor: pointer;
-}
-.header-section__right__btn:hover{
-	text-decoration: underline;
-	color:#fff;
-}
+
 /* 底部导航 */
 .footer-section{
 	width: 100%;
@@ -105,6 +93,7 @@ body{
 	box-sizing:border-box;
 	border:none;
 	background:transparent;
+	color: inherit;
 }
 .edit-textarea{
 	min-width: 660px;
@@ -115,8 +104,4 @@ body{
 	border: 1px solid #60d5ba;
 	
 }
-.resume-eidt-section__body__modules.common-bg__blue .edit-input,
-.resume-eidt-section__body__modules.common-bg__green .edit-input,
-.resume-eidt-section__body__modules.common-bg__brown .edit-input{
-	color: #fff;
-}
+

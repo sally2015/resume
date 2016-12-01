@@ -1,12 +1,12 @@
 {{%
 <script type="x-template" id="tpl-body">
 	<div class="resume-eidt-section__body" :class=" ['common-bg__'+currentBasicBg]">
-			<div class="resume-eidt-section__body__modules resume-eidt-section__body__basic" :class=" ['common-bg__'+currentBasicBg]">
+			<div class="resume-eidt-section__body__modules resume-eidt-section__body__basic" :class=" ['common-bg__'+currentBasicBg]" v-init-style="options.header.style">
 				<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__name">
-					<span class="resume-eidt-section__body__basic__name__layout"><input type="text" class="edit-input" v-model="basicName"></span>
+					<span class="resume-eidt-section__body__basic__name__layout"><input type="text" class="edit-input" v-model="options.header.name"></span>
 				</div>
-				<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__contact">
-					<span v-for="(index, itemName) in contactList" :class="['resume-eidt-section__body__basic__'+ itemName+'__layout']"><input type="text" class="edit-input" v-model="contactList[itemName]"></span>
+				<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__contact" >
+					<span v-for="item in contactList" :class="['resume-eidt-section__body__basic__'+ item.name+'__layout']"><input type="text" v-init-style="item.style" class="edit-input" v-model="item.name"></span>
 				</div>
 				<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__photo">
 					<div class="resume-eidt-section__body__basic__photo__wrap">
@@ -20,28 +20,28 @@
 					</div>
 				</div>
 			</div>
-			<div v-for="(item, itemName) in moduleList" class="resume-eidt-section__body__modules resume-eidt-section__body__modules__education">
+			<div v-for="item in moduleList" class="resume-eidt-section__body__modules resume-eidt-section__body__modules__education">
 				<div class="resume-eidt-section__body__modules__item resume-eidt-section__body__modules__title">
 					<span class="resume-eidt-section__body__modules__education__title__layout" >
-						<input type="text" v-model="item.title"  class="edit-input" :class=" ['common-text__'+currentBasicBg]">
+						<input type="text" v-model="item.name"  class="edit-input" :class=" ['common-text__'+currentBasicBg]">
 					</span>
 				</div>
 				<div class="resume-eidt-section__body__modules__item resume-eidt-section__body__modules__content">
 					<div class="resume-eidt-section__body__modules__content__first-row">
-						<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.arr.time" >
-							<input type="text" v-model="item.arr.time"  class="edit-input" >
+						<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.time" >
+							<input type="text" v-model="item.time.name"  class="edit-input" >
 						</span>
-						<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.arr.name">
-							<input type="text" v-model="item.arr.name" class="edit-input">
+						<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.detail">
+							<input type="text" v-model="item.detail.name" class="edit-input">
 						</span>
-						<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.arr.name">
-							<input type="text" v-model="item.arr.others"  class="edit-input">
+						<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.supplement">
+							<input type="text" v-model="item.supplement.name"  class="edit-input">
 						</span>
 					</div>
 					<div class="resume-eidt-section__body__modules__content__second-row">
 						<div class="expandingArea resume-eidt-section__body__modules__content__second-row__layout">
-							<pre class="div-pre">{{item.arr.des}}<br></pre>
-						    <textarea class="edit-textarea" placeholder="输入文字" v-model="item.arr.des"></textarea>
+							<pre class="div-pre">{{item.desc.name}}<br></pre>
+						    <textarea class="edit-textarea" placeholder="输入文字" v-model="item.desc.name"></textarea>
 						</div>
 					</div>
 				</div>

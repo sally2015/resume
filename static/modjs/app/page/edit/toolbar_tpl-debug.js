@@ -8,6 +8,9 @@ define(function(require, exports, module) { 'use strict'
 		changeColor: function(color) {
 			this.changeBasicBg(color);
 			this.isIndex = color;
+		},
+		save: function(){
+			console.log(this.options)
 		}
 	}
 	var methodsMix = util.extend(MX.mapMutations, MX.mapActions);
