@@ -68,7 +68,7 @@ app.use(cookieParser());
 app.use(
 	express.static(
 		path.resolve(__dirname, '../static'), {
-			maxAge: config.staticExpires * 60 *1000
+			// maxAge: config.staticExpires * 60 *1000
 		}
 	)
 )

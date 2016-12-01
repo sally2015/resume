@@ -78,11 +78,11 @@ define(function(require, exports, module) { 'use strict'
 						bg:'green'
 					},
 					header:{
-						name:"张三",
+						name:"oby",
 						style:{
-							bgColor:'#4A86B9',
+							bgColor:'#000',
 							fontSize:30,
-							color:'red',
+							color:'#fff',
 							left:20,
 							top:20
 						},
