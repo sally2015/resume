@@ -67,14 +67,14 @@ define(function(require, exports, module) { 'use strict'
 						top:120
 					}
 				},
-				school:{
+				detail:{
 					name:'广东工业大学',
 					style:{
 						left:300,
 						top:120
 					}
 				},
-				major:{
+				supplement:{
 					name:'信息管理与信息系统',
 					style:{
 						left:400,
@@ -248,9 +248,9 @@ define(function(require, exports, module) { 'use strict'
 			   		el.style[attr] = styleList[attr];
 			   	}
 			}
-		  }
 		}
-	});
+	}
+});
 	return bodyTpl;
 
 });
