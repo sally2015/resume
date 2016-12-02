@@ -156,17 +156,23 @@ var Pdf = {
             doc.fillColor(data.education.style.color);
             doc.text(data.education.name, data.education.style.left, data.education.style.top);
 
-            doc.fontSize(data.education.time.style.fontSize ? data.education.time.style.fontSize : defaultFintSize);
+            if(data.education.time){
+doc.fontSize(data.education.time.style.fontSize ? data.education.time.style.fontSize : defaultFintSize);
             doc.fillColor(data.education.time.style.color ? data.education.time.style.color : 'black');
             doc.text(data.education.time.name, data.education.time.style.left, data.education.time.style.top);
+            }
 
-            doc.fontSize(data.education.school.style.fontSize ? data.education.school.style.fontSize : defaultFintSize);
-            doc.fillColor(data.education.school.style.color ? data.education.school.style.color : 'black');
-            doc.text(data.education.school.name, data.education.school.style.left, data.education.school.style.top);
+if(data.education.detail){
+            doc.fontSize(data.education.detail.style.fontSize ? data.education.detail.style.fontSize : defaultFintSize);
+            doc.fillColor(data.education.detail.style.color ? data.education.detail.style.color : 'black');
+            doc.text(data.education.detail.name, data.education.detail.style.left, data.education.detail.style.top);
+}
 
-            doc.fontSize(data.education.major.style.fontSize ? data.education.major.style.fontSize : defaultFintSize);
-            doc.fillColor(data.education.major.style.color ? data.education.major.style.color : 'black');
-            doc.text(data.education.major.name, data.education.major.style.left, data.education.major.style.top);
+if(data.education.supplement){
+            doc.fontSize(data.education.supplement.style.fontSize ? data.education.supplement.style.fontSize : defaultFintSize);
+            doc.fillColor(data.education.supplement.style.color ? data.education.supplement.style.color : 'black');
+            doc.text(data.education.supplement.name, data.education.supplement.style.left, data.education.supplement.style.top);
+}
 
             doc.fontSize(data.education.desc.style.fontSize ? data.education.desc.style.fontSize : defaultFintSize);
             doc.fillColor(data.education.desc.style.color ? data.education.desc.style.color : 'black');
