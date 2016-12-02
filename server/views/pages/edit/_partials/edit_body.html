@@ -51,6 +51,7 @@
 			<form method="post" action="./uploadImage" target="upload_name" enctype="multipart/form-data">
 	            <input type="file" name="file" accept="image/*">
 	            <input type="submit" name="submit" value="点击上传">
+	            <input type="hidden" name="callback" value="uploadImageCallbackFunc">
 	            <iframe name="upload_name" style="display: none;"></iframe>
 	        </form>
 	</div>

@@ -6,6 +6,11 @@ define(function(require, exports, module) { 'use strict'
 
 	Vue.use(require('vue-resource'));
 
+	//图片上传回调示例
+	window.uploadImageCallbackFunc=function(result){
+		console.log(result);
+	};
+
 	// #ajax basic
 	var data = {
 		name: 'oby',

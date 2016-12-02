@@ -30,16 +30,17 @@ var Interface = {
                 var data = req.query.data;
 
                 DB.get(data, function(result) {
-                    Pdf.generalFile(result);
+                    Pdf.generalFile(result,function(){
+                        var filepath = PATH.join(ServerPath, Pdf.filepath);
+                        var fileName = 'test.pdf';
 
-                    var filepath = PATH.join(ServerPath, Pdf.filepath);
-                    var fileName = 'test.pdf';
-                    res.download(filepath, fileName, function(err) {
-                        if (err) {
-                            console.log('err', err)
-                        } else {
-                            console.log('download success...')
-                        }
+                        res.download(filepath, fileName, function(err) {
+                            if (err) {
+                                console.log('err', err)
+                            } else {
+                                console.log('download success...')
+                            }
+                        });
                     });
                 });
             });
@@ -82,34 +83,46 @@ var Interface = {
                         } else {
                             console.log('rename ok');
                         }
-                    });
 
-                    //新建文件到新的目录
-                    var readable = FS.createReadStream(PATH.join(ServerPath, uploadTemp, newFileName));
-                    var writable = FS.createWriteStream(newPath);
-                    readable.pipe(writable);
+                        //新建文件到新的目录--https://segmentfault.com/a/1190000000519006
+                        var readable = FS.createReadStream(PATH.join(ServerPath, uploadTemp, newFileName));
+                        var writable = FS.createWriteStream(newPath);
+                        readable.pipe(writable);
+
+                        readable.on('end', function() {
+                            writable.end();
+
+                            var callback=null;
+                            if(fields.callback){
+                                callback=fields.callback;
+                            }
+                            var params={
+                                status:200,
+                                message : '上传成功',
+                                url : 'http://localhost:2606/images/' + newFileName
+                            };
+
+                            res.set({
+                                'content-type' : 'text/html;charset=utf-8'
+                            });
+                            if(callback){
+                                res.send('<script>window.parent.'+callback+'('+JSON.stringify(params)+');</script>');
+                            }else{
+                                res.send('<script>window.parent.alert("没有callback...");</script>');
+                            }
+                        });
+                    });
                 }
 
-                res.set({
-                    'content-type' : 'text/plain;charset=utf-8'
-                });
-                res.send({
-                    status : 200,
-                    message : '上传成功',
-                    url : 'http://localhost:2606/images/' + newFileName
-                });
-
             });
-
-            return;
         })
     }
 };
 
 //PDF文件对象
 var Pdf = {
-    filepath : 'public/test.pdf',
-    generalFile : function(data) {
+    filepath : 'files/pdf/test.pdf',
+    generalFile : function(data,callback) {
         var filepath = PATH.join(ServerPath, this.filepath);
 
         var doc = new PDF();
@@ -118,7 +131,12 @@ var Pdf = {
             FS.unlinkSync(filepath);
         }
 
-        doc.pipe(FS.createWriteStream(filepath));
+
+        var stream=doc.pipe(FS.createWriteStream(filepath));
+        //注意，输出流对象(可写流)是异步的，需要事件监听
+        stream.on('finish',function(){
+            callback();
+        });
 
         if (!data) {
             return;
