@@ -109,5 +109,10 @@ textarea{
 .err-text{
 	color:#fc411b;
 }
-
+.pull-left{
+	float: left;
+}
+.pull-right{
+	float: right;
+}
 

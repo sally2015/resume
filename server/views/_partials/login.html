@@ -1,0 +1,40 @@
+{{%
+<script type="x-template" id="tpl-logReg">
+	<section class="section-logReg">
+		<div class="section-logReg__module section-login" v-if="isLogin">
+			<h3 class="section-logReg__module__title">登录</h3>
+			<div class="section-logReg__module__form-control">
+				<input type="text" placeholder="邮箱地址">
+			</div>
+			<div class="section-logReg__module__form-control">
+				<input type="text" placeholder="密码">
+			</div>
+			<div class="section-logReg__module__link clearfix">
+				<a class="pull-left common-text__green" href="#">忘记密码?</a>
+				<a v-on:click="changeModule(false)" class="pull-right common-text__green" href="#">注册resume</a>
+			</div>
+			<div class="section-logReg__module__form-control">
+				<a class="section-logReg__module__submit-btn" href="#">登录</a>
+			</div>
+		</div>
+		<div class="section-logReg__module section-register" v-else="isLogin">
+			<h3 class="section-logReg__module__title">注册</h3>
+			<div class="section-logReg__module__form-control">
+				<input type="text" placeholder="邮箱地址">
+			</div>
+			<div class="section-logReg__module__form-control">
+				<input type="text" placeholder="密码">
+			</div>
+			<div class="section-logReg__module__form-control">
+				<input type="text" placeholder="再次输入密码">
+			</div>
+			<div class="section-logReg__module__link clearfix">
+				<a v-on:click="changeModule(true)" class="pull-right common-text__green" href="#">去登录</a>
+			</div>
+			<div class="section-logReg__module__form-control">
+				<a class="section-logReg__module__submit-btn" href="#">注册</a>
+			</div>
+		</div>
+	</section>
+</script>
+%}}

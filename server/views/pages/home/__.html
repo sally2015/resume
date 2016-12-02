@@ -22,8 +22,10 @@
 
 {{#block ('main') }}
 	<h1 class="boundary correct-text">我不是404了，我是首页</h1>
+	<v-login></v-login>
+	
 {{/block}}
 
 {{#block('beforebodyEnd')}}
-<script>require('/page/info/')</script>
+<script>require('/page/home/')</script>
 {{/block}}
