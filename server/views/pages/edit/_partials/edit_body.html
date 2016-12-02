@@ -13,10 +13,14 @@
 						请上传照片
 					</div>
 					<div class="resume-eidt-section__body__basic__photo__layer">
-						<span class="resume-eidt-section__body__basic__file-btn">
-							更换照片
-							<input type="file" value="更换照片">
-						</span>
+						<form method="post" action="/uploadImage" target="upload_name" enctype="multipart/form-data">
+							<span class="resume-eidt-section__body__basic__file-btn">
+								更换照片
+								 <input v-on:change="photoSubmit" name="file" accept="image/*" type="file" value="更换照片">
+							</span>
+				           	<input id="photoSubmit" type="submit" style="opacity:0;" name="submit">
+				            <iframe name="upload_name" style="display: none;"></iframe>
+					    </form>
 					</div>
 				</div>
 			</div>
@@ -46,8 +50,7 @@
 					</div>
 				</div>
 			</div>
-			<button @click="save()">save</button>
-			<a href="./download" target="_blank">download</a>
+			
 			<form method="post" action="./uploadImage" target="upload_name" enctype="multipart/form-data">
 	            <input type="file" name="file" accept="image/*">
 	            <input type="submit" name="submit" value="点击上传">

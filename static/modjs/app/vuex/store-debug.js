@@ -8,12 +8,17 @@ define(function (require, exports, module) { 'use strict';
 
 	var state = {
 		currentBasicBg: "blue",
-		resumeOptions: {}
+		resumeOptions: {
+			main: {
+				bg : 'blue'
+			}
+		}
 
 	}
 	var mutations = {
 		CHANGE_BASIC_BG: function (state, color) {
 			state.currentBasicBg = color;
+			state.resumeOptions ? ( state.resumeOptions.main.bg = color ) : '';
 		},
 		CHANGE_OPTIONS: function (state, options) {
 			state.resumeOptions = options;

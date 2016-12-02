@@ -4,7 +4,7 @@ define(function(require, exports, module) { 'use strict'
 		util = require('util/1.0.x/util'),
 		MX = require('/vuex/mapmixin');
 
-	Vue.use(require('vue-resource'));
+	
 	var options={
 			main:{
 				bg:'green'
@@ -185,7 +185,8 @@ define(function(require, exports, module) { 'use strict'
 					height:40
 				},
 			}
-		};
+	}
+	//处理options
 	var computedOptions = {
 		contactList: function(){
 			var headerList = this.options.header;
@@ -210,7 +211,14 @@ define(function(require, exports, module) { 'use strict'
 			return newList;
 		}
 	}
+	//自身方法
+    var methods = {
+		photoSubmit: function(){
+			console.log(11)
+		}
+	}
 	var computedMix = util.extend(MX.mapState, MX.mapGetters, computedOptions);
+	var methodsMix = util.extend(MX.mapMutations, MX.mapActions, methods);
 	var bodyTpl = Vue.extend({
 		template: '#tpl-body',
 		data: function(){
@@ -219,12 +227,13 @@ define(function(require, exports, module) { 'use strict'
 			}
 		},
 		computed: computedMix,
-		methods: {
-			save:function(){
-				var url='./save?'+'data='+encodeURIComponent(JSON.stringify(this.options));
-				this.$http.get(url).then(function(result){
-                    //debugger
-				});
+		methods: methodsMix,
+		watch: {
+			options: {
+				handler: function(oldVal, newVal){
+					this.changeResumeOptions(this.options);
+				},
+				deep:true
 			}
 		},
 		directives: {
