@@ -4,7 +4,10 @@ define(function(require, exports, module) { 'use strict'
 		util = require('util/1.0.x/util'),
 		MX = require('/vuex/mapmixin');
 
-	
+	//图片上传回调示例
+	window.uploadImageCallbackFunc=function(result){
+		console.log(result);
+	};
 	var options={
 			main:{
 				bg:'green'
