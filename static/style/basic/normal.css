@@ -46,7 +46,7 @@ body{
 	left: 0;
 }
 .header-section__nav{
-	margin: 0 200px;
+	margin: 0 300px;
 }
 .header-section__nav .nav-item{
 	float: left;
@@ -61,19 +61,7 @@ body{
 .header-section__right{
 	right: 0;
 }
-.header-section__right__btn{
-	float:left;
-	padding: 0 20px;
-	background-color: #00c091;
-	height: 100%;
-	color: #fff;
-	border-right: 5px solid #fff;
-	cursor: pointer;
-}
-.header-section__right__btn:hover{
-	text-decoration: underline;
-	color:#fff;
-}
+
 /* 底部导航 */
 .footer-section{
 	width: 100%;
@@ -94,7 +82,69 @@ body{
 .footer-section .footer-link{
 	color: #fff;
 }
+/* 登录模块 */
+.section-logReg{
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #f5f5f5;
+	padding: 40px 20px;
+}
+.section-logReg__module{
 
+}
+
+.section-logReg__module__title{
+	position: relative;
+	height: 50px;
+	line-height: 50px;
+	z-index: 3;
+	text-align: center;
+	color: #838383;
+	font-size: 16px;
+}
+.section-logReg__module__title:after{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -25px;
+	margin-top: -25px;
+	content: '';
+	width: 50px;
+	height: 50px;
+	border: #e4e4e4 1px solid;
+	border-radius: 50%;
+	z-index: 1;
+}
+.section-logReg__module__form-control{
+	width: 365px;
+	height: 40px;
+	margin-top: 20px;
+}
+.section-logReg__module__form-control input{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	line-height: 40px;
+	padding: 0 10px;
+	border: 1px solid #d7d8da;
+	border-radius: 4px;
+}
+.section-logReg__module__link{
+	margin-top: 10px;
+}
+.section-logReg__module__submit-btn{
+	display: block;
+	height: 40px;
+	line-height: 40px;
+	background: #45BBAE;
+	color: #fff;
+	text-align: center;
+}
+.section-logReg__module__submit-btn:hover{
+	color: #fff;
+}
 /* 编辑公共样式 */
 .edit-input,
 .edit-textarea{
@@ -105,6 +155,7 @@ body{
 	box-sizing:border-box;
 	border:none;
 	background:transparent;
+	color: inherit;
 }
 .edit-textarea{
 	min-width: 660px;
@@ -115,8 +166,4 @@ body{
 	border: 1px solid #60d5ba;
 	
 }
-.resume-eidt-section__body__modules.common-bg__blue .edit-input,
-.resume-eidt-section__body__modules.common-bg__green .edit-input,
-.resume-eidt-section__body__modules.common-bg__brown .edit-input{
-	color: #fff;
-}
+

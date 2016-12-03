@@ -16,17 +16,12 @@
 			</ul>
 			<ul class="nav clearfix" v-else="isIndexNav">
 				<li class="nav-item">
-					<a class="nav-link" href="#">返回上一页</a>
+					<a class="nav-link" href="javascript:history.back();">返回上一页</a>
 				</li>	
 			</ul>
 		</nav>
-		<div class="header-section__right" v-if="isIndexNav">
+		<div class="header-section__right">
 			个人中心
-		</div>
-		<div class="header-section__right clearfix" v-else="isIndexNav">
-			<a href="#" class="header-section__right__btn">预览</a>
-			<a href="#" class="header-section__right__btn">保存</a>
-			<a href="#" class="header-section__right__btn">下载</a>
 		</div>
 	</header>
 </script>

@@ -11,9 +11,14 @@
 			仅支持PDF下载
 		</li>
 	</ul>
+	<div class="resume-eidt-section__topbar__middle">
+		<a href="#" class="resume-eidt-section__topbar__middle__btn">预览</a>
+		<a href="#" @click="save()" class="resume-eidt-section__topbar__middle__btn" >保存</a>
+		<a href="./download" class="resume-eidt-section__topbar__middle__btn">下载</a>
+	</div>
 	<div class="resume-eidt-section__topbar__right">
 		<span v-for = "color in colorData" class="resume-eidt-section__topbar__color-box " :class="[{ 'active': isIndex === color},'resume-eidt-section__topbar__color-box__'+color]" @click="changeColor(color)"></span>
-		<span class="resume-eidt-section__topbar__tpl-btn__changecommon-text__green">更换模板</span>
+		<span class="resume-eidt-section__topbar__tpl-btn__change common-text__green">更换模板</span>
 	</div>
 </div>
 </script>

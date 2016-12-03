@@ -1,1 +1,3 @@
 node_modules
+server/uploadTemp/*
+server/files/*
