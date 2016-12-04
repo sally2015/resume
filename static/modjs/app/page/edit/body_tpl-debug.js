@@ -507,7 +507,7 @@ define(function(require, exports, module) { 'use strict'
 			}
 			document.getElementById('save').addEventListener('click', function(){
 				var url='./save?'+'data='+encodeURIComponent(JSON.stringify(test));
-				console.log(JSON.stringify(vm.options))
+				console.log(JSON.stringify(test))
 				vm.$http.get(url).then(function(result){
 	                //debugger
 				});
