@@ -1,9 +1,9 @@
 {{%
 <script type="x-template" id="tpl-body">
 	<div class="resume-eidt-section__body" :class=" ['common-bg__'+currentBasicBg]">
-		<div class="resume-eidt-section__body__modules resume-eidt-section__body__basic" :class=" ['common-bg__'+currentBasicBg]" v-init-style="options.header.style">
+		<div class="resume-eidt-section__body__modules resume-eidt-section__body__basic" :class=" ['common-bg__'+currentBasicBg]">
 			<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__name">
-				<span class="resume-eidt-section__body__basic__name__layout"><input type="text" class="edit-input" v-model="options.header.name"></span>
+				<span class="resume-eidt-section__body__basic__name__layout"><input type="text" class="edit-input" v-init-style="options.header.style" v-model="options.header.name"></span>
 			</div>
 			<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__contact" >
 				<span v-for="item in contactList" :class="['resume-eidt-section__body__basic__'+ item.name+'__layout']"><input type="text" v-init-style="item.style" class="edit-input" v-model="item.name"></span>
@@ -26,31 +26,34 @@
 				</div>
 			</div>
 		</div>
-		<div v-for="item in moduleList" class="resume-eidt-section__body__modules" v-init-style="item.style">
+		<div v-for="item in moduleList" class="resume-eidt-section__body__modules" >
 			<div class="resume-eidt-section__body__modules__item resume-eidt-section__body__modules__title">
 				<span class="resume-eidt-section__body__modules__education__title__layout">
-					<input type="text" v-model="item.name"  class="edit-input" :class=" ['common-text__'+currentBasicBg]">
+					<input type="text" v-init-style="item.style" v-model="item.name"  class="edit-input" :class=" ['common-text__'+currentBasicBg]">
 				</span>
 			</div>
 			<div class="resume-eidt-section__body__modules__item resume-eidt-section__body__modules__content">
 				<div class="resume-eidt-section__body__modules__content__first-row">
-					<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.time" v-init-style="item.time.style">
-						<input type="text" v-model="item.time.name"  class="edit-input" >
+					<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.time" >
+						<input v-init-style="item.time.style" type="text" v-model="item.time.name"  class="edit-input" >
 					</span>
-					<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.detail" v-init-style="item.detail.style">
-						<input type="text" v-model="item.detail.name" class="edit-input">
+					<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.detail" >
+						<input v-init-style="item.detail.style" type="text" v-model="item.detail.name" class="edit-input">
 					</span>
-					<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.supplement" v-init-style="item.supplement.style">
-						<input type="text" v-model="item.supplement.name"  class="edit-input">
+					<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.supplement" >
+						<input v-init-style="item.supplement.style" type="text" v-model="item.supplement.name"  class="edit-input">
 					</span>
 				</div>
 				<div class="resume-eidt-section__body__modules__content__second-row">
 					<div class="expandingArea resume-eidt-section__body__modules__content__second-row__layout" v-init-style="item.desc.style">
 						<pre class="div-pre">{{item.desc.name}}<br></pre>
-					    <textarea class="edit-textarea" placeholder="输入文字" v-model="item.desc.name"></textarea>
+					    <textarea  class="edit-textarea" placeholder="输入文字" v-model="item.desc.name"></textarea>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="resume-eidt-section__footer" 
+		:class=" ['common-bg__'+currentBasicBg]" v-init-style="options.footer">
 		</div>
 	</div>
 </script>
