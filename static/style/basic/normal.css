@@ -3,6 +3,7 @@ body{
 }
 .main{
 	padding-top: 70px;
+	position: relative;
 }
 .common-bg__blue{
 	background: #4A86B9 !important;
@@ -158,7 +159,7 @@ body{
 	color: inherit;
 }
 .edit-textarea{
-	min-width: 660px;
+	min-width: 600px;
 	min-height:56px;
 }
 .edit-input:focus,

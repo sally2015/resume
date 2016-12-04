@@ -1,0 +1,6 @@
+/*!
+ * JRaiser 2 Mobile Javascript Library
+ * dom-helper - v1.1.1 (2015-08-28T16:05:32+0800)
+ * http://jraiser.org/ | Released under MIT license
+ */
+define("dom/1.1.x/dom-helper",["base/1.1.x/"],function(e,t,r){"use strict";var n,c=e("base/1.1.x/");return["webkitMatchesSelector","mozMatchesSelector","oMatchesSelector","matchesSelector"].some(function(e){return document.documentElement[e]?(n=e,!0):void 0}),{querySelectorAll:function(e,t,r){if(!e)return[];t=t||document;var n;if(1===t.nodeType||9===t.nodeType)try{n=c.toArray(t.querySelectorAll(e))}catch(o){}return r&&n&&c.merge(r,n),n||[]},canMatch:function(e,t){return t&&e&&1===e.nodeType?n?e[n](t):-1!==this.querySelectorAll(t).indexOf(e):!1},matches:function(e,t){if(!e)return t;var r=this.canMatch;return t.filter(function(t){return r(t,e)})},uniqueSort:function(e){if(e.length>1){var t;if(e=e.sort(function(e,r){if(e===r)return t=!0,0;var n=("00000"+e.compareDocumentPosition(r).toString(2)).slice(-6);return 1==n[4]||1==n[2]?1:1==n[3]||1==n[1]?-1:0}),t)for(var r=e.length-1;r>=1;r--)e[r]===e[r-1]&&e.splice(r,1)}return e}}});
