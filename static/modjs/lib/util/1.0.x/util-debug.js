@@ -160,4 +160,10 @@ exports.compareVersion = function(a, b) {
 
 	return 0;
 };
+
+
+exports.getStyle = function(dom, attr) {
+	var style = window.getComputedStyle(dom,'');
+	return style[attr];
+};
 });

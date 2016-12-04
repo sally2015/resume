@@ -1,62 +1,57 @@
 {{%
 <script type="x-template" id="tpl-body">
 	<div class="resume-eidt-section__body" :class=" ['common-bg__'+currentBasicBg]">
-			<div class="resume-eidt-section__body__modules resume-eidt-section__body__basic" :class=" ['common-bg__'+currentBasicBg]" v-init-style="options.header.style">
-				<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__name">
-					<span class="resume-eidt-section__body__basic__name__layout"><input type="text" class="edit-input" v-model="options.header.name"></span>
+		<div class="resume-eidt-section__body__modules resume-eidt-section__body__basic" :class=" ['common-bg__'+currentBasicBg]" v-init-style="options.header.style">
+			<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__name">
+				<span class="resume-eidt-section__body__basic__name__layout"><input type="text" class="edit-input" v-model="options.header.name"></span>
+			</div>
+			<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__contact" >
+				<span v-for="item in contactList" :class="['resume-eidt-section__body__basic__'+ item.name+'__layout']"><input type="text" v-init-style="item.style" class="edit-input" v-model="item.name"></span>
+			</div>
+			<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__photo">
+				<div class="resume-eidt-section__body__basic__photo__wrap">
+					请上传照片
 				</div>
-				<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__contact" >
-					<span v-for="item in contactList" :class="['resume-eidt-section__body__basic__'+ item.name+'__layout']"><input type="text" v-init-style="item.style" class="edit-input" v-model="item.name"></span>
-				</div>
-				<div class="resume-eidt-section__body__basic__modules__item resume-eidt-section__body__basic__photo">
-					<div class="resume-eidt-section__body__basic__photo__wrap">
-						请上传照片
-					</div>
-					<div class="resume-eidt-section__body__basic__photo__layer">
-						<form method="post" action="/uploadImage" target="upload_name" enctype="multipart/form-data">
-							<span class="resume-eidt-section__body__basic__file-btn">
-								更换照片
-								 <input v-on:change="photoSubmit" name="file" accept="image/*" type="file" value="更换照片">
-							</span>
-				           	<input id="photoSubmit" type="submit" style="opacity:0;" name="submit">
-				            <iframe name="upload_name" style="display: none;"></iframe>
-					    </form>
-					</div>
+				<div class="resume-eidt-section__body__basic__photo__layer">
+					<form class="resume-eidt-section__body__basic__photo__form" method="post" action="/uploadImage" target="upload_name" enctype="multipart/form-data">
+						<span class="resume-eidt-section__body__basic__file-btn">
+							更换照片
+							 <input v-on:change="photoSubmit" name="file" accept="image/*" type="file" value="更换照片">
+						</span>
+						<input type="hidden" name="callback" value="uploadImageCallbackFunc">
+			           	<input id="photoSubmit" type="submit" style="opacity:0;" name="submit">
+			            <iframe name="upload_name" style="display: none;"></iframe>
+				    </form>
+				    <img class="resume-eidt-section__body__basic__photo__img" id="uploadImage" v-bind:src="computedSrc">
 				</div>
 			</div>
-			<div v-for="item in moduleList" class="resume-eidt-section__body__modules resume-eidt-section__body__modules__education">
-				<div class="resume-eidt-section__body__modules__item resume-eidt-section__body__modules__title">
-					<span class="resume-eidt-section__body__modules__education__title__layout" >
-						<input type="text" v-model="item.name"  class="edit-input" :class=" ['common-text__'+currentBasicBg]">
+		</div>
+		<div v-for="item in moduleList" class="resume-eidt-section__body__modules" v-init-style="item.style">
+			<div class="resume-eidt-section__body__modules__item resume-eidt-section__body__modules__title">
+				<span class="resume-eidt-section__body__modules__education__title__layout">
+					<input type="text" v-model="item.name"  class="edit-input" :class=" ['common-text__'+currentBasicBg]">
+				</span>
+			</div>
+			<div class="resume-eidt-section__body__modules__item resume-eidt-section__body__modules__content">
+				<div class="resume-eidt-section__body__modules__content__first-row">
+					<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.time" v-init-style="item.time.style">
+						<input type="text" v-model="item.time.name"  class="edit-input" >
+					</span>
+					<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.detail" v-init-style="item.detail.style">
+						<input type="text" v-model="item.detail.name" class="edit-input">
+					</span>
+					<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.supplement" v-init-style="item.supplement.style">
+						<input type="text" v-model="item.supplement.name"  class="edit-input">
 					</span>
 				</div>
-				<div class="resume-eidt-section__body__modules__item resume-eidt-section__body__modules__content">
-					<div class="resume-eidt-section__body__modules__content__first-row">
-						<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.time" >
-							<input type="text" v-model="item.time.name"  class="edit-input" >
-						</span>
-						<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.detail">
-							<input type="text" v-model="item.detail.name" class="edit-input">
-						</span>
-						<span class="resume-eidt-section__body__modules__content__first-row__layout" v-if="item.supplement">
-							<input type="text" v-model="item.supplement.name"  class="edit-input">
-						</span>
-					</div>
-					<div class="resume-eidt-section__body__modules__content__second-row">
-						<div class="expandingArea resume-eidt-section__body__modules__content__second-row__layout">
-							<pre class="div-pre">{{item.desc.name}}<br></pre>
-						    <textarea class="edit-textarea" placeholder="输入文字" v-model="item.desc.name"></textarea>
-						</div>
+				<div class="resume-eidt-section__body__modules__content__second-row">
+					<div class="expandingArea resume-eidt-section__body__modules__content__second-row__layout" v-init-style="item.desc.style">
+						<pre class="div-pre">{{item.desc.name}}<br></pre>
+					    <textarea class="edit-textarea" placeholder="输入文字" v-model="item.desc.name"></textarea>
 					</div>
 				</div>
 			</div>
-			
-			<form method="post" action="./uploadImage" target="upload_name" enctype="multipart/form-data">
-	            <input type="file" name="file" accept="image/*">
-	            <input type="submit" name="submit" value="点击上传">
-	            <input type="hidden" name="callback" value="uploadImageCallbackFunc">
-	            <iframe name="upload_name" style="display: none;"></iframe>
-	        </form>
+		</div>
 	</div>
 </script>
 %}}

@@ -3,19 +3,13 @@ define(function(require, exports, module) { 'use strict'
 		util = require('util/1.0.x/util'),
 		MX = require('/vuex/mapmixin');
 
-	Vue.use(require('vue-resource'));
+	Vue.use(require('vue/2.1.x/vue-resource'));
 
 	//自身方法
     var methods = {
 		changeColor: function(color) {
 			this.changeBasicBg(color);
 			this.isIndex = color;
-		},
-		save: function(){
-			var url='./save?'+'data='+encodeURIComponent(JSON.stringify(this.resumeOptions));
-			this.$http.get(url).then(function(result){
-                //debugger
-			});
 		},
 		photoSubmit: function(){
 			

@@ -2,12 +2,8 @@
 define(function(require, exports, module) { 'use strict' 
 	var Vue = require('vue/2.1.x/vue'),
 		util = require('util/1.0.x/util'),
-		MX = require('/vuex/mapmixin');
-
-	//图片上传回调示例
-	window.uploadImageCallbackFunc=function(result){
-		console.log(result);
-	};
+		MX = require('/vuex/mapmixin'),
+		$ = require('dom/1.1.x/')
 	var options={
 			main:{
 				bg:'green'
@@ -189,6 +185,34 @@ define(function(require, exports, module) { 'use strict'
 				},
 			}
 	}
+	function getPosition(ele, attr){
+		var map = {
+			left: 'offsetLeft',
+			top: 'offsetTop'
+		}
+		return ele[map[attr]]
+	}
+	function RGBToHex(rgb){ 
+	   var regexp = /[0-9]{0,3}/g;  
+	   var re = rgb.match(regexp);//利用正则表达式去掉多余的部分，将rgb中的数字提取
+	   var hexColor = "#"; var hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];  
+	   for (var i = 0; i < re.length; i++) {
+	        var r = null, c = re[i], l = c; 
+	        var hexAr = [];
+	        while (c > 16){  
+	              r = c % 16;  
+	              c = (c / 16) >> 0; 
+	              hexAr.push(hex[r]);  
+	         } hexAr.push(hex[c]);
+	         if(l < 16&&l != ""){        
+	             hexAr.push(0)
+	         }
+	       hexColor += hexAr.reverse().join(''); 
+	    }  
+	   //alert(hexColor)  
+	   return hexColor;  
+	} 
+	var map = ['left', 'top','fontSize','color','backgroundColor','width','height'];
 	//处理options
 	var computedOptions = {
 		contactList: function(){
@@ -212,44 +236,72 @@ define(function(require, exports, module) { 'use strict'
 				newList.push(optionList[attr]);
 			}
 			return newList;
+		},
+		computedSrc: function(){
+			var url = this.imgSrc,
+				index = url.indexOf('images/'),
+				imgPath = 'files/'+url.substring(index);
+				this.options.header.avatar.url = imgPath;
+
+			return this.imgSrc;
 		}
 	}
 	//自身方法
     var methods = {
 		photoSubmit: function(){
-			console.log(11)
+			
+			document.getElementById('photoSubmit').click();
+		},
+		callback: function(result){
+			
+			this.imgSrc =  result.url ;
 		}
 	}
 	var computedMix = util.extend(MX.mapState, MX.mapGetters, computedOptions);
 	var methodsMix = util.extend(MX.mapMutations, MX.mapActions, methods);
 	var bodyTpl = Vue.extend({
 		template: '#tpl-body',
+		mounted: function(){ //组件初始化
+			var vm = this;
+			window.uploadImageCallbackFunc=function(result){
+				vm.callback(result);
+			}
+			document.getElementById('save').addEventListener('click', function(){
+				var url='./save?'+'data='+encodeURIComponent(JSON.stringify(vm.options));
+				console.log(JSON.stringify(vm.options))
+				vm.$http.get(url).then(function(result){
+	                //debugger
+				});
+			});
+		},
 		data: function(){
 			return {
-				options: options
+				options: options,
+				imgSrc: ""
 			}
 		},
 		computed: computedMix,
 		methods: methodsMix,
-		watch: {
-			options: {
-				handler: function(oldVal, newVal){
-					this.changeResumeOptions(this.options);
-				},
-				deep:true
-			}
-		},
 		directives: {
 		  initStyle: {
-		    inserted: function (el, binding) {
-			   	var styleList;
-				if (binding.value.bgColor) {
-   					binding.value.backgroundColor = binding.value.bgColor;
+		    inserted:  function (el, binding) {
+			   	var computedStyle = {};
+			   	map.forEach(function(item){
+			   		if(item === 'left' || item === 'top'){
+			   			computedStyle[item] = parseInt( getPosition(el, item) );
+			   		}else if( item === 'backgroundColor' || item === 'color'){
+			   			computedStyle[item] = RGBToHex( util.getStyle(el, item) );
+			   		}else{
+			   			computedStyle[item] = parseInt( util.getStyle(el, item) );
+			   		}
+			   		
+			   	});
+				if (computedStyle.backgroundColor) {
+   					computedStyle.bgColor = computedStyle.backgroundColor;
+   					delete computedStyle.backgroundColor;
    				}
-			   	styleList = binding.value;
-			   	for (var attr in styleList) {
-			   		el.style[attr] = styleList[attr];
-			   	}
+			   	util.extend(binding.value, computedStyle);
+			   	
 			}
 		}
 	}

@@ -30,7 +30,7 @@ var Interface = {
                 var data = req.query.data;
 
                 DB.get(data, function(result) {
-                    Pdf.generalFile(result,function(){
+                    Pdf.generalFile(result, function() {
                         var filepath = PATH.join(ServerPath, Pdf.filepath);
                         var fileName = 'test.pdf';
 
@@ -92,12 +92,12 @@ var Interface = {
                         readable.on('end', function() {
                             writable.end();
 
-                            var callback=null;
-                            if(fields.callback){
-                                callback=fields.callback;
+                            var callback = null;
+                            if (fields.callback) {
+                                callback = fields.callback;
                             }
-                            var params={
-                                status:200,
+                            var params = {
+                                status : 200,
                                 message : '上传成功',
                                 url : 'http://localhost:2606/images/' + newFileName
                             };
@@ -105,9 +105,9 @@ var Interface = {
                             res.set({
                                 'content-type' : 'text/html;charset=utf-8'
                             });
-                            if(callback){
-                                res.send('<script>window.parent.'+callback+'('+JSON.stringify(params)+');</script>');
-                            }else{
+                            if (callback) {
+                                res.send('<script>window.parent.' + callback + '(' + JSON.stringify(params) + ');</script>');
+                            } else {
                                 res.send('<script>window.parent.alert("没有callback...");</script>');
                             }
                         });
@@ -122,7 +122,7 @@ var Interface = {
 //PDF文件对象
 var Pdf = {
     filepath : 'files/pdf/test.pdf',
-    generalFile : function(data,callback) {
+    generalFile : function(data, callback) {
         var filepath = PATH.join(ServerPath, this.filepath);
 
         var doc = new PDF();
@@ -131,10 +131,9 @@ var Pdf = {
             FS.unlinkSync(filepath);
         }
 
-
-        var stream=doc.pipe(FS.createWriteStream(filepath));
+        var stream = doc.pipe(FS.createWriteStream(filepath));
         //注意，输出流对象(可写流)是异步的，需要事件监听
-        stream.on('finish',function(){
+        stream.on('finish', function() {
             callback();
         });
 
@@ -142,9 +141,13 @@ var Pdf = {
             return;
         }
 
+        console.log('============================');
+        // console.log(data.header.style);
+        // console.log(data.header.city.style);
+
         doc.font(PATH.join(ServerPath, 'db/simsun.ttf'));
 
-        var defaultFintSize = 14;
+        var defaultFontSize = 14;
 
         if (data.main) {
             //doc.fontSize(data.footer.bg);
@@ -158,43 +161,62 @@ var Pdf = {
 
             doc.fontSize(data.header.style.fontSize);
             doc.fillColor(data.header.style.color);
-            doc.text(data.header.name, data.header.style.left, data.header.style.top);
+            doc.text(data.header.name, data.header.style.left, data.header.style.top, {
+                width : data.header.style.width,
+                height : data.header.style.height
+            });
 
-            doc.fontSize(data.header.city.style.fontSize ? data.header.city.style.fontSize : defaultFintSize);
+            doc.fontSize(data.header.city.style.fontSize ? data.header.city.style.fontSize : defaultFontSize);
             doc.fillColor(data.header.city.style.color ? data.header.city.style.color : 'black');
-            doc.text(data.header.city.name, data.header.city.style.left, data.header.city.style.top);
+            doc.text(data.header.city.name, data.header.city.style.left, data.header.city.style.top, {
+                width : data.header.city.style.width,
+                height : data.header.city.style.height
+            });
 
-            doc.fontSize(data.header.phone.style.fontSize ? data.header.phone.style.fontSize : defaultFintSize);
+            doc.fontSize(data.header.phone.style.fontSize ? data.header.phone.style.fontSize : defaultFontSize);
             doc.fillColor(data.header.phone.style.color ? data.header.phone.style.color : 'black');
-            doc.text(data.header.phone.name, data.header.phone.style.left, data.header.phone.style.top);
+            doc.text(data.header.phone.name, data.header.phone.style.left, data.header.phone.style.top, {
+                width : data.header.phone.style.width,
+                height : data.header.phone.style.height
+            });
 
-            doc.fontSize(data.header.email.style.fontSize ? data.header.email.style.fontSize : defaultFintSize);
+            doc.fontSize(data.header.email.style.fontSize ? data.header.email.style.fontSize : defaultFontSize);
             doc.fillColor(data.header.email.style.color ? data.header.email.style.color : 'black');
-            doc.text(data.header.email.name, data.header.email.style.left, data.header.email.style.top);
+            doc.text(data.header.email.name, data.header.email.style.left, data.header.email.style.top, {
+                width : data.header.email.style.width,
+                height : data.header.email.style.height
+            });
 
             doc.image(data.header.avatar.url, data.header.avatar.style.left, data.header.avatar.style.top, {
                 width : data.header.avatar.style.width,
                 height : data.header.avatar.style.height
             });
         }
+
         if (data.education) {
-            this.setDocData(doc, data.education, defaultFintSize);
+            this.setDocData(doc, data.education, defaultFontSize);
         }
         if (data.project) {
-            this.setDocData(doc, data.project, defaultFintSize);
+            this.setDocData(doc, data.project, defaultFontSize);
         }
         if (data.work) {
-            this.setDocData(doc, data.work, defaultFintSize);
+            this.setDocData(doc, data.work, defaultFontSize);
         }
 
         if (data.profession) {
             doc.fontSize(data.profession.style.fontSize);
             doc.fillColor(data.profession.style.color);
-            doc.text(data.profession.name, data.profession.style.left, data.profession.style.top);
+            doc.text(data.profession.name, data.profession.style.left, data.profession.style.top, {
+                width : data.profession.style.width,
+                height : data.profession.style.height
+            });
 
-            doc.fontSize(data.profession.desc.style.fontSize ? data.profession.desc.style.fontSize : defaultFintSize);
+            doc.fontSize(data.profession.desc.style.fontSize ? data.profession.desc.style.fontSize : defaultFontSize);
             doc.fillColor(data.profession.desc.style.color ? data.profession.desc.style.color : 'black');
-            doc.text(data.profession.desc.name, data.profession.desc.style.left, data.profession.desc.style.top);
+            doc.text(data.profession.desc.name, data.profession.desc.style.left, data.profession.desc.style.top, {
+                width : data.profession.desc.style.width,
+                height : data.profession.desc.style.height
+            });
         }
 
         if (data.footer) {
@@ -216,32 +238,44 @@ var Pdf = {
 
         doc.end();
     },
-    setDocData : function(doc, obj, defaultFintSize) {
+    setDocData : function(doc, obj, defaultFontSize) {
         doc.fontSize(obj.style.fontSize);
         doc.fillColor(obj.style.color);
         doc.text(obj.name, obj.style.left, obj.style.top);
 
         if (obj.time) {
-            doc.fontSize(obj.time.style.fontSize ? obj.time.style.fontSize : defaultFintSize);
+            doc.fontSize(obj.time.style.fontSize ? obj.time.style.fontSize : defaultFontSize);
             doc.fillColor(obj.time.style.color ? obj.time.style.color : 'black');
-            doc.text(obj.time.name, obj.time.style.left, obj.time.style.top);
+            doc.text(obj.time.name, obj.time.style.left, obj.time.style.top, {
+                width : obj.time.style.width,
+                height : obj.time.style.height
+            });
         }
 
         if (obj.detail) {
-            doc.fontSize(obj.detail.style.fontSize ? obj.detail.style.fontSize : defaultFintSize);
+            doc.fontSize(obj.detail.style.fontSize ? obj.detail.style.fontSize : defaultFontSize);
             doc.fillColor(obj.detail.style.color ? obj.detail.style.color : 'black');
-            doc.text(obj.detail.name, obj.detail.style.left, obj.detail.style.top);
+            doc.text(obj.detail.name, obj.detail.style.left, obj.detail.style.top, {
+                width : obj.detail.style.width,
+                height : obj.detail.style.height
+            });
         }
 
         if (obj.supplement) {
-            doc.fontSize(obj.supplement.style.fontSize ? obj.supplement.style.fontSize : defaultFintSize);
+            doc.fontSize(obj.supplement.style.fontSize ? obj.supplement.style.fontSize : defaultFontSize);
             doc.fillColor(obj.supplement.style.color ? obj.supplement.style.color : 'black');
-            doc.text(obj.supplement.name, obj.supplement.style.left, obj.supplement.style.top);
+            doc.text(obj.supplement.name, obj.supplement.style.left, obj.supplement.style.top, {
+                width : obj.supplement.style.width,
+                height : obj.supplement.style.height
+            });
         }
 
-        doc.fontSize(obj.desc.style.fontSize ? obj.desc.style.fontSize : defaultFintSize);
+        doc.fontSize(obj.desc.style.fontSize ? obj.desc.style.fontSize : defaultFontSize);
         doc.fillColor(obj.desc.style.color ? obj.desc.style.color : 'black');
-        doc.text(obj.desc.name, obj.desc.style.left, obj.desc.style.top);
+        doc.text(obj.desc.name, obj.desc.style.left, obj.desc.style.top, {
+            width : obj.desc.style.width,
+            height : obj.desc.style.height
+        });
     }
 };
 

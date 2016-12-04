@@ -8,7 +8,6 @@ define(function(require, exports, module) { 'use strict'
 
     var computedMix = util.extend(MX.mapState, MX.mapGetters);
     var methodsMix = util.extend(MX.mapMutations, MX.mapActions);
-
 	var vm = new Vue({
 		el: '#app',
 		store: store,
@@ -18,9 +17,6 @@ define(function(require, exports, module) { 'use strict'
 			}
 		},
 		watch: {
-			basicName: function (newVal, oldVal){	
-				
-			}
 		},
 		computed: computedMix,
 		methods: methodsMix,

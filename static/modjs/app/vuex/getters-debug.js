@@ -3,8 +3,4 @@ define(function (require, exports, module) { 'use strict';
 		return state.currentBasicBg;
 	}
 
-	exports.getResumeOptions = function(state){
-		return state.resumeOptions;
-	}
-
 });
