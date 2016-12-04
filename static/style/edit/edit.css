@@ -57,6 +57,10 @@
 .resume-eidt-section__body__basic{
 	position: relative;
 }
+.resume-eidt-section__body__basic input{
+	position: relative;
+	color: #fff;
+}
 .resume-eidt-section__body__modules{
 	padding:30px;
 	background: #fff;

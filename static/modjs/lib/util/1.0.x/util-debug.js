@@ -160,10 +160,59 @@ exports.compareVersion = function(a, b) {
 
 	return 0;
 };
-
-
+/**
+ * 计算元素的当前样式
+ * @method getStyle
+ * @param {HTMLCollection} dom dom元素
+ * @param {String} attr 样式属性
+ * @return {String} 样式值
+ */
 exports.getStyle = function(dom, attr) {
 	var style = window.getComputedStyle(dom,'');
 	return style[attr];
 };
+
+/**
+ * 获取元素的相对位置
+ * @method getPosition
+ * @param {HTMLCollection} ele dom元素
+ * @param {String} attr 样式属性
+ * @return {String} 样式值
+ */
+exports.getPosition = function (ele, attr){
+	var map = {
+		left: 'offsetLeft',
+		top: 'offsetTop'
+	}
+	return ele[map[attr]]
+}
+/**
+ * rgb或rgba转为16进制，忽略透明度
+ * @method RGBToHex
+ * @param {String} rgb
+ * @return {String} 16进制
+ */
+exports.RGBToHex = function (rgb){ 
+   	var regexp = /[0-9]{0,3}/g,
+   	 	re = rgb.match(regexp),
+ 		hexColor = "#",
+   		hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']; 
+
+   	re = re.slice(0,12); // 排除rgba中a的参数
+
+   	for (var i = 0; i < re.length; i++) {
+        var r = null, c = re[i], l = c; 
+        var hexAr = [];
+        while (c > 16){  
+              r = c % 16;  
+              c = (c / 16) >> 0; 
+              hexAr.push(hex[r]);  
+         } hexAr.push(hex[c]);
+         if(l < 16&&l != ""){        
+             hexAr.push(0)
+         }
+       hexColor += hexAr.reverse().join(''); 
+    }   
+   return hexColor;  
+} 
 });

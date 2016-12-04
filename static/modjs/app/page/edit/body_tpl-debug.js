@@ -3,7 +3,9 @@ define(function(require, exports, module) { 'use strict'
 	var Vue = require('vue/2.1.x/vue'),
 		util = require('util/1.0.x/util'),
 		MX = require('/vuex/mapmixin'),
-		$ = require('dom/1.1.x/')
+		$ = require('dom/1.1.x/'),
+		map = require('./map.js');
+
 	var options={
 			main:{
 				bg:'green'
@@ -179,40 +181,12 @@ define(function(require, exports, module) { 'use strict'
 				}
 			},
 			footer:{
-				bgColor:'#4A86B9',
+				bgColor:'#222222',
 				style:{
 					height:40
 				},
 			}
 	}
-	function getPosition(ele, attr){
-		var map = {
-			left: 'offsetLeft',
-			top: 'offsetTop'
-		}
-		return ele[map[attr]]
-	}
-	function RGBToHex(rgb){ 
-	   var regexp = /[0-9]{0,3}/g;  
-	   var re = rgb.match(regexp);//利用正则表达式去掉多余的部分，将rgb中的数字提取
-	   var hexColor = "#"; var hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];  
-	   for (var i = 0; i < re.length; i++) {
-	        var r = null, c = re[i], l = c; 
-	        var hexAr = [];
-	        while (c > 16){  
-	              r = c % 16;  
-	              c = (c / 16) >> 0; 
-	              hexAr.push(hex[r]);  
-	         } hexAr.push(hex[c]);
-	         if(l < 16&&l != ""){        
-	             hexAr.push(0)
-	         }
-	       hexColor += hexAr.reverse().join(''); 
-	    }  
-	   //alert(hexColor)  
-	   return hexColor;  
-	} 
-	var map = ['left', 'top','fontSize','color','backgroundColor','width','height'];
 	//处理options
 	var computedOptions = {
 		contactList: function(){
@@ -238,7 +212,7 @@ define(function(require, exports, module) { 'use strict'
 			return newList;
 		},
 		computedSrc: function(){
-			var url = this.imgSrc,
+			var url = this.imgSrc ? this.imgSrc : "images/test.jpg",
 				index = url.indexOf('images/'),
 				imgPath = 'files/'+url.substring(index);
 				this.options.header.avatar.url = imgPath;
@@ -249,26 +223,29 @@ define(function(require, exports, module) { 'use strict'
 	//自身方法
     var methods = {
 		photoSubmit: function(){
-			
 			document.getElementById('photoSubmit').click();
 		},
-		callback: function(result){
+		uploadImageCallback: function(result){
 			
 			this.imgSrc =  result.url ;
 		}
 	}
 	var computedMix = util.extend(MX.mapState, MX.mapGetters, computedOptions);
 	var methodsMix = util.extend(MX.mapMutations, MX.mapActions, methods);
+
 	var bodyTpl = Vue.extend({
 		template: '#tpl-body',
 		mounted: function(){ //组件初始化
 			var vm = this;
 			window.uploadImageCallbackFunc=function(result){
-				vm.callback(result);
+				vm.uploadImageCallback(result);
 			}
 			document.getElementById('save').addEventListener('click', function(){
-				var url='./save?'+'data='+encodeURIComponent(JSON.stringify(vm.options));
-				console.log(JSON.stringify(vm.options))
+				var url;
+
+				vm.options.header.style.bgColor = map.radix[vm.currentBasicBg];
+
+				url ='./save?'+'data='+encodeURIComponent(JSON.stringify(vm.options));
 				vm.$http.get(url).then(function(result){
 	                //debugger
 				});
@@ -283,29 +260,29 @@ define(function(require, exports, module) { 'use strict'
 		computed: computedMix,
 		methods: methodsMix,
 		directives: {
-		  initStyle: {
-		    inserted:  function (el, binding) {
-			   	var computedStyle = {};
-			   	map.forEach(function(item){
-			   		if(item === 'left' || item === 'top'){
-			   			computedStyle[item] = parseInt( getPosition(el, item) );
-			   		}else if( item === 'backgroundColor' || item === 'color'){
-			   			computedStyle[item] = RGBToHex( util.getStyle(el, item) );
-			   		}else{
-			   			computedStyle[item] = parseInt( util.getStyle(el, item) );
-			   		}
-			   		
-			   	});
-				if (computedStyle.backgroundColor) {
-   					computedStyle.bgColor = computedStyle.backgroundColor;
-   					delete computedStyle.backgroundColor;
-   				}
-			   	util.extend(binding.value, computedStyle);
-			   	
-			}
+		  	initStyle: function (el, binding) {
+				   	var computedStyle = {},
+				   		scale = 0.8;
+
+				   	map.attr.forEach(function(item){
+				   		if(item === 'left' || item === 'top'){
+				   			computedStyle[item] = parseInt( util.getPosition(el, item) ) * scale;
+				   		}else if( item === 'backgroundColor' || item === 'color'){
+				   			computedStyle[item] = util.RGBToHex( util.getStyle(el, item) );
+				   		}else{
+				   			computedStyle[item] = parseInt( util.getStyle(el, item) ) * scale;
+				   		}
+				   		
+				   	});
+
+					if (computedStyle.backgroundColor) {
+	   					computedStyle.bgColor = computedStyle.backgroundColor;
+	   					delete computedStyle.backgroundColor;
+	   				}
+				   	util.extend(binding.value, computedStyle); 	
+				}
 		}
-	}
-});
+	});
 	return bodyTpl;
 
 });
