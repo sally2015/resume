@@ -234,7 +234,7 @@ define(function(require, exports, module) { 'use strict'
 		            }
 		        },
 		        "avatar": {
-		            "url": "files/",
+		            "url": "files/images/test.jpg",
 		            "style": {
 		                "width": 100,
 		                "height": 100,
@@ -494,6 +494,28 @@ define(function(require, exports, module) { 'use strict'
 		callback: function(result){
 			
 			this.imgSrc =  result.url ;
+		},
+		register:function(){
+			var url='./register';
+			var params='username=admin@qq.com&email=admin@qq.com&pwd=admin';
+			url+='?'+params;
+			this.$http.get(url).then(function(result){
+                console.log(result)
+			});
+		},
+		login:function(){
+			var url='./login';
+			var params='username=admin@qq.com&pwd=admin';
+			url+='?'+params;
+			this.$http.get(url).then(function(result){
+                console.log(result)
+			});
+		},
+		logout:function(){
+			var url='./logout';
+			this.$http.get(url).then(function(result){
+                console.log(result)
+			});
 		}
 	}
 	var computedMix = util.extend(MX.mapState, MX.mapGetters, computedOptions);

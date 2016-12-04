@@ -13,6 +13,10 @@ var Interface = {
     init : function(express, app, serverPath) {
         ServerPath = serverPath;
 
+        app.use(express.static('public'));
+        //所有文件的路径都是相对于存放目录的，因此，存放静态文件的目录名不会出现在 URL 中。
+        app.use(express.static('files'));
+
         DB.connectDb(function(err, db) {
             console.log('connected...')
             app.get('/save', function(req, res) {
@@ -45,9 +49,84 @@ var Interface = {
                 });
             });
 
-            app.use(express.static('public'));
-            //所有文件的路径都是相对于存放目录的，因此，存放静态文件的目录名不会出现在 URL 中。
-            app.use(express.static('files'));
+            app.get('/register', function(req, res) {
+                var data = req.query;
+
+                DB.isExist('t_user',{email:data.email},function(result){
+                    console.log('用户已存在？-->>'+result.exist)
+                    if(result.exist){
+                        res.send({
+                            status : 100,
+                            message : '用户已存在'
+                        });
+                    }else{
+                        DB.saveRegister(JSON.stringify(data), function(result) {
+                            if(result.status===200){
+                                res.send({
+                                    status : 200,
+                                    message : '注册成功'
+                                });
+                            }else{
+                                res.send({
+                                    status : 500,
+                                    message : '注册失败'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            app.get('/login', function(req, res) {
+                var data = req.query;
+
+                DB.findUser(data.username,function(result){
+                    if(result.status===200){
+                        if(result.pwd===data.pwd){//校验密码是否相等
+                            res.cookie('username',encodeURIComponent(data.username),{
+                                expires:new Date(Date.now()+24*60*60*1000),//有效期1天
+                                path:'/'
+                            });
+                            res.send({
+                                status : 200,
+                                message : '登录成功'
+                            });
+                        }else{
+                            res.send({
+                                status : 103,
+                                message : '密码错误'
+                            });
+                        }
+                    }else{
+                        res.send({
+                            status : 102,
+                            message : '用户不存在'
+                        });
+                    }
+                });
+            });
+
+            app.get('/logout', function(req, res) {
+                var cookies = req.cookies;
+
+                if(cookies.username){
+                    res.clearCookie('username',{
+                        path:''
+                    });
+                    res.send({
+                        status : 200,
+                        message : '退出成功'
+                    });
+                    return;
+                }
+
+                //如果没有cookie，则认为是退出成功
+                res.send({
+                    status : 200,
+                    message : '退出成功'
+                });
+            });
+            
         });
 
         app.post('/uploadImage', function(req, res) {
@@ -141,9 +220,13 @@ var Pdf = {
             return;
         }
 
-        console.log('============================');
+        // console.log('============================');
         // console.log(data.header.style);
         // console.log(data.header.city.style);
+
+        // doc.page.size=1200;
+        // doc.page.size=[1400,2000];
+        // console.log(doc.page.size)
 
         doc.font(PATH.join(ServerPath, 'db/simsun.ttf'));
 
