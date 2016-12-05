@@ -23,6 +23,9 @@ body{
 .common-text__brown{
 	color: #A79D91 !important;
 }
+.error-info{
+	color: #e96900;
+}
 /* 头部导航 */
 .header-section{
 	position: fixed;
@@ -167,4 +170,6 @@ body{
 	border: 1px solid #60d5ba;
 	
 }
-
+.disable{
+	background: #eee !important;
+}
