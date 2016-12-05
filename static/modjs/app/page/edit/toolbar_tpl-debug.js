@@ -3,8 +3,6 @@ define(function(require, exports, module) { 'use strict'
 		util = require('util/1.0.x/util'),
 		MX = require('/vuex/mapmixin');
 
-	Vue.use(require('vue/2.1.x/vue-resource'));
-
 	//自身方法
     var methods = {
 		changeColor: function(color) {

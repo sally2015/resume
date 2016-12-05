@@ -20,8 +20,11 @@
 				</li>	
 			</ul>
 		</nav>
-		<div class="header-section__right">
+		<div class="header-section__right" v-if="isLogin">
 			个人中心
+		</div>
+		<div class="header-section__right" v-else="isLogin">
+			<a @click="logout()"  href="#">退出登录</a>
 		</div>
 	</header>
 </script>

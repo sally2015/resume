@@ -228,28 +228,6 @@ define(function(require, exports, module) { 'use strict'
 		uploadImageCallback: function(result){
 			
 			this.imgSrc =  result.url ;
-		},
-		register:function(){
-			var url='./register';
-			var params='username=admin@qq.com&email=admin@qq.com&pwd=admin';
-			url+='?'+params;
-			this.$http.get(url).then(function(result){
-                console.log(result)
-			});
-		},
-		login:function(){
-			var url='./login';
-			var params='username=admin@qq.com&pwd=admin';
-			url+='?'+params;
-			this.$http.get(url).then(function(result){
-                console.log(result)
-			});
-		},
-		logout:function(){
-			var url='./logout';
-			this.$http.get(url).then(function(result){
-                console.log(result)
-			});
 		}
 	}
 	var computedMix = util.extend(MX.mapState, MX.mapGetters, computedOptions);
@@ -267,7 +245,7 @@ define(function(require, exports, module) { 'use strict'
 
 				vm.options.header.style.bgColor = map.radix[vm.currentBasicBg];
 
-				url ='./save?'+'data='+encodeURIComponent(JSON.stringify(vm.options));
+				url ='./save?'+'data='+encodeURIComponent(JSON.stringify(options));
 				vm.$http.get(url).then(function(result){
 	                //debugger
 				});
@@ -282,7 +260,29 @@ define(function(require, exports, module) { 'use strict'
 		computed: computedMix,
 		methods: methodsMix,
 		directives: {
-		  	initStyle: function (el, binding) {
+		  	initStyle: {
+		  		inserted: function (el, binding) {
+				   	var computedStyle = {},
+				   		scale = 0.8;
+
+				   	map.attr.forEach(function(item){
+				   		if(item === 'left' || item === 'top'){
+				   			computedStyle[item] = parseInt( util.getPosition(el, item) ) * scale;
+				   		}else if( item === 'backgroundColor' || item === 'color'){
+				   			computedStyle[item] = util.RGBToHex( util.getStyle(el, item) );
+				   		}else{
+				   			computedStyle[item] = parseInt( util.getStyle(el, item) ) * scale;
+				   		}
+				   		
+				   	});
+
+					if (computedStyle.backgroundColor) {
+	   					computedStyle.bgColor = computedStyle.backgroundColor;
+	   					delete computedStyle.backgroundColor;
+	   				}
+				   	util.extend(binding.value, computedStyle); 	
+				},
+				update: function (el, binding) {
 				   	var computedStyle = {},
 				   		scale = 0.8;
 
@@ -303,6 +303,7 @@ define(function(require, exports, module) { 'use strict'
 	   				}
 				   	util.extend(binding.value, computedStyle); 	
 				}
+		  	}
 		}
 	});
 	return bodyTpl;
