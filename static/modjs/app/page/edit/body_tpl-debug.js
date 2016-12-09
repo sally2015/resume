@@ -190,7 +190,7 @@ define(function(require, exports, module) { 'use strict'
 	//处理options
 	var computedOptions = {
 		contactList: function(){
-			var headerList = this.options.header;
+			var headerList = options.header;
 			var newList = [];
 			for (var attr in headerList) {
 				if (attr === 'city' || attr === 'phone' || attr === 'email') {
@@ -200,7 +200,7 @@ define(function(require, exports, module) { 'use strict'
 			return newList;
 		},
 		moduleList: function(){
-			var optionList = this.options;
+			var optionList = options;
 			var newList = [];
 			for (var attr in optionList) {
 				
@@ -215,7 +215,7 @@ define(function(require, exports, module) { 'use strict'
 			var url = this.imgSrc ? this.imgSrc : "images/test.jpg",
 				index = url.indexOf('images/'),
 				imgPath = 'files/'+url.substring(index);
-				this.options.header.avatar.url = imgPath;
+				options.header.avatar.url = imgPath;
 
 			return this.imgSrc;
 		}
@@ -236,18 +236,28 @@ define(function(require, exports, module) { 'use strict'
 	var bodyTpl = Vue.extend({
 		template: '#tpl-body',
 		mounted: function(){ //组件初始化
-			var vm = this;
+			var vm = this,
+				sectionTipTimer = null;
 			window.uploadImageCallbackFunc=function(result){
 				vm.uploadImageCallback(result);
 			}
 			document.getElementById('save').addEventListener('click', function(){
 				var url;
 
-				vm.options.header.style.bgColor = map.radix[vm.currentBasicBg];
+				options.header.style.bgColor = map.radix[vm.currentBasicBg];
 
 				url ='./save?'+'data='+encodeURIComponent(JSON.stringify(options));
 				vm.$http.get(url).then(function(result){
-	                //debugger
+	                if (result.status === 200) {
+	                	vm.changeTipMsg("保存成功");
+	                	document.getElementById('sectionTip').classList.add('show');
+
+	                	clearTimeout(sectionTip);
+	                	sectionTipTimer = setTimeout(function () {
+	                		document.getElementById('sectionTip').classList.remove('show');
+	                	},2000);
+
+	                };
 				});
 			});
 		},

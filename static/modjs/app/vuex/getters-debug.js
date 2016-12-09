@@ -3,4 +3,8 @@ define(function (require, exports, module) { 'use strict';
 		return state.currentBasicBg;
 	}
 
+	exports.getTipMsg = function(state){
+		return state.tipMsg;
+	}
+
 });

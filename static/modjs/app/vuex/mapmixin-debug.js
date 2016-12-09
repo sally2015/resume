@@ -8,7 +8,7 @@ define(function (require, exports, module) { 'use strict';
 	    }
 	});
 
-	var mapGetters = Vuex.mapGetters(['getCurrentBasicBg']);
+	var mapGetters = Vuex.mapGetters(['getCurrentBasicBg','getTipMsg']);
 
   var mapMutations = Vuex.mapMutations({
       CHANGE_BASIC_BG: function (state) {
@@ -16,7 +16,7 @@ define(function (require, exports, module) { 'use strict';
   		}
   });
 
-  var mapActions = Vuex.mapActions(['changeBasicBg']);
+  var mapActions = Vuex.mapActions(['changeBasicBg','changeTipMsg']);
 
   return {
    		mapState: mapState,

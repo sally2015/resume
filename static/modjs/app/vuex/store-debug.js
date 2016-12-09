@@ -7,11 +7,15 @@ define(function (require, exports, module) { 'use strict';
 	Vue.use(Vuex);
 
 	var state = {
-		currentBasicBg: "blue"
+		currentBasicBg: "blue",
+		tipMsg: "初始化提示"
 	}
 	var mutations = {
 		CHANGE_BASIC_BG: function (state, color) {
 			state.currentBasicBg = color;
+		},
+		CHANGE_TIP_MEG: function (state, msg) {
+			state.tipMsg = msg;
 		}
 	}
 
