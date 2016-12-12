@@ -3,6 +3,7 @@ var FS = require('fs');
 var DB = require('./db');
 var Pdf = require('./Pdf');
 var Multiparty = require('multiparty');
+var Session = require('./session');
 
 /**
  * HTTP请求对象
@@ -169,9 +170,13 @@ var HttpRequest = {
 
             DB.findUser(data.username, function(result) {
                 if (result.status === 200) {
+                    console.log(result)
                     if (result.userInfo.pwd === data.pwd) { //校验密码是否相等
+                        Session.set({
+                            secret: result.userInfo.username
+                        });
                         res.cookie('username', encodeURIComponent(data.username), {
-                            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), //有效期1天
+                            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
                             path: '/'
                         });
                         res.send({
@@ -198,9 +203,13 @@ var HttpRequest = {
         this.app.get('/logout', function(req, res) {
             var cookies = req.cookies;
 
+            Session.set({
+                secret: 'not_login'
+            });
+
             if (cookies.username) {
                 res.clearCookie('username', {
-                    path: ''
+                    path: '/'
                 });
                 res.send({
                     status: 200,

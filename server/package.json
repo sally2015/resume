@@ -12,6 +12,7 @@
     "cookie-parser": "^1.4.3",
     "debug": "^2.3.3",
     "express": "^4.14.0",
+    "express-session": "^1.14.2",
     "gulp-babel": "^6.1.2",
     "linebreak": "^0.3.0",
     "mongodb": "^2.2.11",

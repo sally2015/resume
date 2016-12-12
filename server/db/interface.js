@@ -1,5 +1,6 @@
 var DB = require('./db');
 var HttpRequest = require('./http-request');
+var Session = require('./session');
 
 //暴露的接口对象
 var Interface = {
@@ -17,6 +18,8 @@ var Interface = {
             console.log('connected...');
             This.initHttpRequest();
         });
+
+        Session.init(this.app);
     },
     initHttpRequest: function() {
         HttpRequest.init(this.app, this.serverPath);
