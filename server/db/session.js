@@ -9,6 +9,9 @@ var Session = {
         this.app = app;
 
         this.set();
+
+        // console.log('SESSION-------------');
+        // console.log(SESSION);
     },
     /**
      * 设置session
@@ -16,7 +19,7 @@ var Session = {
     set: function(options) {
         console.log(options);
         var data = {
-            secure:'12345',
+            secret:'12345',
             name: this.sessionName,
             cookie: {
                 //默认一天
@@ -43,6 +46,16 @@ var Session = {
         }
 
         this.app.use(SESSION(data));
+    },
+    //判断请求过来的session和服务端这边的是否一致
+    isEqual:function(req){
+        var cookieSession=req.cookies.ESESSIONID;
+        var serverSid=req.session.id;
+
+        cookieSession=cookieSession.substring(2);
+        var cookieSid=cookieSession.substring(0,cookieSession.indexOf('.'));
+
+        return cookieSid===serverSid?true:false;
     }
 };
 

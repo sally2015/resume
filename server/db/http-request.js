@@ -4,6 +4,7 @@ var DB = require('./db');
 var Pdf = require('./Pdf');
 var Multiparty = require('multiparty');
 var Session = require('./session');
+var ResInfo = require('./resinfo');
 
 /**
  * HTTP请求对象
@@ -16,10 +17,26 @@ var HttpRequest = {
     save: function() {
         var This = this;
         this.app.get('/save', function(req, res) {
+            if(!Session.isEqual(req)){//先校验session
+                res.send({
+                    status: ResInfo._102.status,
+                    message: ResInfo._102.msg
+                });
+            }
+
+            // console.log('req.session------------');
+            // console.log(req.session);
+            // console.log(req.cookies);
+            // console.log(SESSION);
+            // console.log(SESSION.get(req.session.id));
+            // console.log(req.sessionId)
+            // console.log(Session.get(req.session.id));
+            // debugger
+
             if (!req.cookies.username) {
                 res.send({
-                    status: 102,
-                    message: '用户未登录'
+                    status: ResInfo._102.status,
+                    message: ResInfo._102.msg
                 });
             }
 
@@ -32,8 +49,8 @@ var HttpRequest = {
 
                     DB.save(data, function(result) {
                         res.send({
-                            status: 200,
-                            message: 'success'
+                            status: ResInfo._200.status,
+                            message: ResInfo._200.msg
                         });
                     });
                 } else {
@@ -112,8 +129,8 @@ var HttpRequest = {
                                 callback = fields.callback;
                             }
                             var params = {
-                                status: 200,
-                                message: '上传成功',
+                                status: ResInfo._200.status,
+                                message: ResInfo._200.msg,
                                 url: 'http://localhost:2606/images/' + newFileName
                             };
 
@@ -142,20 +159,20 @@ var HttpRequest = {
                 console.log('用户已存在？-->>' + result.exist)
                 if (result.exist) {
                     res.send({
-                        status: 100,
-                        message: '用户已存在'
+                        status: ResInfo._101.status,
+                        message: ResInfo._101.msg
                     });
                 } else {
                     DB.saveRegister(JSON.stringify(data), function(result) {
                         if (result.status === 200) {
                             res.send({
-                                status: 200,
-                                message: '注册成功'
+                                status: ResInfo._200.status,
+                                message: ResInfo._200.msg
                             });
                         } else {
                             res.send({
-                                status: 500,
-                                message: '注册失败'
+                                status: ResInfo._103.status,
+                                message: ResInfo._103.msg
                             });
                         }
                     });
@@ -170,7 +187,6 @@ var HttpRequest = {
 
             DB.findUser(data.username, function(result) {
                 if (result.status === 200) {
-                    console.log(result)
                     if (result.userInfo.pwd === data.pwd) { //校验密码是否相等
                         Session.set({
                             secret: result.userInfo.username
@@ -180,19 +196,19 @@ var HttpRequest = {
                             path: '/'
                         });
                         res.send({
-                            status: 200,
-                            message: '登录成功'
+                            status: ResInfo._200.status,
+                            message: ResInfo._200.msg
                         });
                     } else {
                         res.send({
-                            status: 103,
-                            message: '密码错误'
+                            status: ResInfo._201.status,
+                            message: ResInfo._201.msg
                         });
                     }
                 } else {
                     res.send({
-                        status: 102,
-                        message: '用户不存在'
+                        status: ResInfo._104.status,
+                        message: ResInfo._104.msg
                     });
                 }
             });
@@ -212,16 +228,16 @@ var HttpRequest = {
                     path: '/'
                 });
                 res.send({
-                    status: 200,
-                    message: '退出成功'
+                    status: ResInfo._200.status,
+                    message: ResInfo._200.msg
                 });
                 return;
             }
 
             //如果没有cookie，则认为是退出成功
             res.send({
-                status: 200,
-                message: '退出成功'
+                status: ResInfo._200.status,
+                message: ResInfo._200.msg
             });
         });
     }

@@ -16,7 +16,7 @@ var DB = {
     },
     save: function(data, callback) {
         console.log('-----------save-----------');
-        console.log(data)
+        // console.log(data)
 
         var This = this;
         var options = JSON.parse(data);
@@ -119,7 +119,7 @@ var DB = {
      */
     findUser: function(username, callback) {
         console.log('-----------findUser-----------');
-        console.log(username)
+        // console.log(username)
 
         if (!this.userTable) {
             this.userTable = this.db.collection('t_user');
@@ -147,7 +147,7 @@ var DB = {
      */
     getUserResumeId: function(loginCookie, callback) {
         console.log('-----------getUserResumeId-----------');
-        console.log(loginCookie)
+        // console.log(loginCookie)
 
         loginCookie = decodeURIComponent(loginCookie);
 
