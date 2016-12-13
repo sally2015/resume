@@ -18,27 +18,21 @@ var HttpRequest = {
         var This = this;
         this.app.get('/save', function(req, res) {
             if(!Session.isEqual(req)){//先校验session
+                console.log('session is not equal...');
                 res.send({
                     status: ResInfo._102.status,
                     message: ResInfo._102.msg
                 });
+                return;
             }
 
-            // console.log('req.session------------');
-            // console.log(req.session);
-            // console.log(req.cookies);
-            // console.log(SESSION);
-            // console.log(SESSION.get(req.session.id));
-            // console.log(req.sessionId)
-            // console.log(Session.get(req.session.id));
-            // debugger
-
-            if (!req.cookies.username) {
-                res.send({
-                    status: ResInfo._102.status,
-                    message: ResInfo._102.msg
-                });
-            }
+            // if (!req.cookies.username) {
+            //     res.send({
+            //         status: ResInfo._102.status,
+            //         message: ResInfo._102.msg
+            //     });
+            //     return;
+            // }
 
             var data = req.query.data;
 
@@ -78,6 +72,31 @@ var HttpRequest = {
                     });
                 });
             });
+        });
+    },
+    getResume: function(req, res) {
+        var This = this;
+        this.app.get('/getResume', function(req, res) {
+            var username = req.cookies.username;
+
+            // if(!username){
+            //     res.send({
+            //         status: ResInfo._102.status,
+            //         message: ResInfo._102.msg
+            //     });
+            //     return;
+            // }
+
+            // DB.findUser(username,function(result){
+            //     if (result.status === 200) {
+            //
+            //     } else {
+            //         res.send({
+            //             status: ResInfo._104.status,
+            //             message: ResInfo._104.msg
+            //         });
+            //     }
+            // });
         });
     },
     uploadImage: function(req, res) {
@@ -217,24 +236,14 @@ var HttpRequest = {
     logout: function(req, res) {
         var This = this;
         this.app.get('/logout', function(req, res) {
-            var cookies = req.cookies;
+            Session.destroy(req);
 
-            Session.set({
-                secret: 'not_login'
-            });
-
-            if (cookies.username) {
+            if (req.cookies.username) {
                 res.clearCookie('username', {
                     path: '/'
                 });
-                res.send({
-                    status: ResInfo._200.status,
-                    message: ResInfo._200.msg
-                });
-                return;
             }
 
-            //如果没有cookie，则认为是退出成功
             res.send({
                 status: ResInfo._200.status,
                 message: ResInfo._200.msg

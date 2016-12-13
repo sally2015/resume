@@ -9,15 +9,12 @@ var Session = {
         this.app = app;
 
         this.set();
-
-        // console.log('SESSION-------------');
-        // console.log(SESSION);
     },
     /**
      * 设置session
      */
     set: function(options) {
-        console.log(options);
+        // console.log(options);
         var data = {
             secret:'12345',
             name: this.sessionName,
@@ -29,7 +26,7 @@ var Session = {
             saveUninitialized: true
         };
 
-        console.log('---------------');
+        // console.log('---------------');
 
         if (options) {
             if (options.secret) { //secret:默认不设置
@@ -52,10 +49,24 @@ var Session = {
         var cookieSession=req.cookies.ESESSIONID;
         var serverSid=req.session.id;
 
+        console.log('-------cookieSession--------serverSid-----------');
+        console.log(cookieSession);
+        console.log('');
+        console.log(serverSid)
+        console.log('');
+
         cookieSession=cookieSession.substring(2);
         var cookieSid=cookieSession.substring(0,cookieSession.indexOf('.'));
 
         return cookieSid===serverSid?true:false;
+    },
+    destroy:function(req){
+        req.session.destroy(function(err) {
+            console.log('-----destroy--------');
+            if(err){
+                console.log(err);
+            }
+      });
     }
 };
 
