@@ -22,6 +22,10 @@ var ResponseInfo = {
         status:105,
         msg:'密码错误'
     },
+    _106:{
+        status:106,
+        msg:'参数为空'
+    },
     _200:{
         status:200,
         msg:'success'
