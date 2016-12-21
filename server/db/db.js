@@ -1,4 +1,5 @@
 var mongoClient = require('mongodb');
+var ResInfo = require('./resinfo');
 
 var DB = {
     db: null,
@@ -16,7 +17,7 @@ var DB = {
     },
     save: function(data, callback) {
         console.log('-----------save-----------');
-        console.log(data)
+        // console.log(data)
 
         var This = this;
         var options = JSON.parse(data);
@@ -68,10 +69,12 @@ var DB = {
      */
     isExist: function(table, field, callback) {
         console.log('-----------isExist-----------');
+        console.log(field);
 
         var currentTable = this.db.collection(table);
 
         currentTable.find(field).toArray(function(err, data) {
+            console.log(data);
             if (data.length === 0) {
                 callback({
                     exist: false
@@ -83,32 +86,56 @@ var DB = {
             }
         });
     },
-    saveRegister: function(data, callback) {
-        console.log('-----------saveRegister-----------');
-        console.log(data)
+    /**
+     * 添加表数据
+     * @param {[type]}   table    哪个表
+     * @param {[type]}   data     要存储的数据-JSON格式
+     * @param {Function} callback 回调函数
+     */
+    add: function(table, data, callback) {
+        console.log('-----------add-----------');
+        // console.log(data)
 
-        var This = this;
         var options = JSON.parse(data);
 
-        if (!this.userTable) {
-            this.userTable = this.db.collection('t_user');
-        }
+        var currentTable = this.db.collection(table);
 
-        //id自增
-        this.userTable.find().toArray(function(err, data) {
+        //id自增，再插入数据
+        currentTable.find().toArray(function(err, data) {
             options.id = data.length;
 
-            This.userTable.insert({
-                id: options.id,
-                username: options.username,
-                email: options.email,
-                pwd: options.pwd,
-                pid_resume: options.id
-            }, function(err, data) {
-                if (typeof callback === 'function') {
+            var insertData = null;
+            if (table === 't_user') { //用户表
+                insertData = {
+                    id: options.id,
+                    username: options.username,
+                    email: options.email,
+                    pwd: options.pwd,
+                    pid_resume: options.id
+                };
+            } else if (table === 't_resume') { //简历表
+                insertData = {
+                    id: options.id,
+                    main: options.main,
+                    header: options.header,
+                    education: options.education,
+                    project: options.project,
+                    work: options.work,
+                    profession: options.profession,
+                    footer: options.footer
+                };
+            }
+
+            currentTable.insert(insertData, function(err, data) {
+                if (!err) {
                     callback({
-                        status: 200,
-                        message: 'success'
+                        status: ResInfo._200.status,
+                        message: ResInfo._200.msg
+                    });
+                } else {
+                    callback({
+                        status: ResInfo._201.status,
+                        message: ResInfo._201.msg
                     });
                 }
             });
@@ -119,7 +146,7 @@ var DB = {
      */
     findUser: function(username, callback) {
         console.log('-----------findUser-----------');
-        console.log(username)
+        // console.log(username)
 
         if (!this.userTable) {
             this.userTable = this.db.collection('t_user');
@@ -130,37 +157,86 @@ var DB = {
         }).toArray(function(err, data) {
             if (!data.length) {
                 callback({
-                    status: 201,
-                    message: '用户不存在'
+                    status: ResInfo._103.status,
+                    message: ResInfo._103.msg
                 });
             } else {
                 callback({
-                    status: 200,
-                    message: 'success',
-                    userInfo: data[0]
+                    status: ResInfo._200.status,
+                    message: data[0]
                 });
             }
         });
+    },
+    update: function(table, data, callback) {
+        var currentTable = this.db.collection(table);
+
+        currentTable.update({
+            id: data.id
+        }, {
+            $set: {
+                main: data.main,
+                header: data.header,
+                education: data.education,
+                project: data.project,
+                work: data.work,
+                profession: data.profession,
+                footer: data.footer
+            }
+        }, function(result) {
+            callback({
+                status: ResInfo._200.status,
+                message: ResInfo._200.msg
+            });
+        })
     },
     /**
      * 根据cookie(username)来查询用户简历表的id
      */
     getUserResumeId: function(loginCookie, callback) {
         console.log('-----------getUserResumeId-----------');
-        console.log(loginCookie)
+        // console.log(loginCookie)
 
         loginCookie = decodeURIComponent(loginCookie);
 
         this.findUser(loginCookie, function(result) {
             if (result.status === 200) {
                 callback({
-                    status: 200,
-                    id: result.userInfo.pid_resume
+                    status: ResInfo._200.status,
+                    message: {
+                        resumeId: result.message.pid_resume
+                    }
                 });
             } else {
                 callback({
-                    status: 102,
-                    message: '用户不存在'
+                    status: ResInfo._104.status,
+                    message: ResInfo._104.msg
+                });
+            }
+        });
+    },
+    /**
+     * 通过id来获取简历的所有数据
+     */
+    getResumeAllDataById: function(id, callback) {
+        console.log('-----------getResumeAllDataById-----------');
+
+        if (!this.resumeTable) {
+            this.resumeTable = this.db.collection('t_resume');
+        }
+
+        this.resumeTable.find({
+            id: id
+        }).toArray(function(err, data) {
+            if (!data.length) {
+                callback({
+                    status: ResInfo._103.status,
+                    message: ResInfo._103.msg
+                });
+            } else {
+                callback({
+                    status: ResInfo._200.status,
+                    message: data[0]
                 });
             }
         });

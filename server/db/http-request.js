@@ -1,8 +1,13 @@
 var PATH = require('path');
 var FS = require('fs');
 var DB = require('./db');
-var Pdf = require('./Pdf');
+var Pdf = require('./pdf');
 var Multiparty = require('multiparty');
+var Session = require('./session');
+var ResInfo = require('./resinfo');
+var User = require('./user');
+var Resume = require('./resume');
+
 
 /**
  * HTTP请求对象
@@ -12,27 +17,64 @@ var HttpRequest = {
         this.app = app;
         this.serverPath = serverPath;
     },
-    save: function() {
+    saveResume: function() {
         var This = this;
         this.app.get('/save', function(req, res) {
-            if (!req.cookies.username) {
-                res.send({
-                    status: 102,
-                    message: '用户未登录'
-                });
-            }
+            // if (!Session.isEqual(req)) { //先校验session
+            //     console.log('session is not equal...');
+            //     res.send({
+            //         status: ResInfo._102.status,
+            //         message: ResInfo._102.msg
+            //     });
+            //     return;
+            // }
+
+            // if (!req.cookies.username) {
+            //     res.send({
+            //         status: ResInfo._102.status,
+            //         message: ResInfo._102.msg
+            //     });
+            //     return;
+            // }
 
             var data = req.query.data;
 
-            //获取用户简历表id
-            DB.getUserResumeId(req.cookies.username, function(result) {
+            console.log('-------save-------');
+            User.getResumeId(decodeURIComponent(req.cookies.username), function(result) {
                 if (result.status === 200) {
-                    data.id = result.id;
-
-                    DB.save(data, function(result) {
+                    //此时，data是json格式的字符串
+                    data = JSON.parse(data);
+                    data.id = result.message.resumeId;
+                    Resume.add(data, function(result) {
                         res.send({
-                            status: 200,
-                            message: 'success'
+                            status: ResInfo._200.status,
+                            message: ResInfo._200.msg
+                        });
+                    });
+                } else {
+                    res.send(result);
+                }
+            });
+        });
+    },
+    getResume: function() {
+        this.app.get('/getResume', function(req, res) {
+            console.log('-------getResume-------');
+
+            if (!req.cookies.username) {
+                res.send({
+                    status: ResInfo._102.status,
+                    message: ResInfo._102.msg
+                });
+                return;
+            }
+
+            User.getResumeId(decodeURIComponent(req.cookies.username), function(result) {
+                if (result.status === 200) {
+                    Resume.getAllDataById(result.message.resumeId, function(result) {
+                        res.send({
+                            status: ResInfo._200.status,
+                            message: result.message
                         });
                     });
                 } else {
@@ -111,8 +153,8 @@ var HttpRequest = {
                                 callback = fields.callback;
                             }
                             var params = {
-                                status: 200,
-                                message: '上传成功',
+                                status: ResInfo._200.status,
+                                message: ResInfo._200.msg,
                                 url: 'http://localhost:2606/images/' + newFileName
                             };
 
@@ -133,32 +175,8 @@ var HttpRequest = {
     register: function(req, res) {
         var This = this;
         this.app.get('/register', function(req, res) {
-            var data = req.query;
-
-            DB.isExist('t_user', {
-                email: data.email
-            }, function(result) {
-                console.log('用户已存在？-->>' + result.exist)
-                if (result.exist) {
-                    res.send({
-                        status: 100,
-                        message: '用户已存在'
-                    });
-                } else {
-                    DB.saveRegister(JSON.stringify(data), function(result) {
-                        if (result.status === 200) {
-                            res.send({
-                                status: 200,
-                                message: '注册成功'
-                            });
-                        } else {
-                            res.send({
-                                status: 500,
-                                message: '注册失败'
-                            });
-                        }
-                    });
-                }
+            User.add(req.query, function(result) {
+                res.send(result);
             });
         });
     },
@@ -167,27 +185,30 @@ var HttpRequest = {
         this.app.get('/login', function(req, res) {
             var data = req.query;
 
-            DB.findUser(data.username, function(result) {
+            User.getByUsername(data.username, function(result) {
                 if (result.status === 200) {
-                    if (result.userInfo.pwd === data.pwd) { //校验密码是否相等
+                    if (result.message.pwd === data.pwd) { //校验密码是否相等
+                        Session.set({
+                            secret: result.message.username
+                        });
                         res.cookie('username', encodeURIComponent(data.username), {
-                            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), //有效期1天
+                            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
                             path: '/'
                         });
                         res.send({
-                            status: 200,
-                            message: '登录成功'
+                            status: ResInfo._200.status,
+                            message: ResInfo._200.msg
                         });
                     } else {
                         res.send({
-                            status: 103,
-                            message: '密码错误'
+                            status: ResInfo._201.status,
+                            message: ResInfo._201.msg
                         });
                     }
                 } else {
                     res.send({
-                        status: 102,
-                        message: '用户不存在'
+                        status: ResInfo._104.status,
+                        message: ResInfo._104.msg
                     });
                 }
             });
@@ -196,23 +217,17 @@ var HttpRequest = {
     logout: function(req, res) {
         var This = this;
         this.app.get('/logout', function(req, res) {
-            var cookies = req.cookies;
+            Session.destroy(req);
 
-            if (cookies.username) {
+            if (req.cookies.username) {
                 res.clearCookie('username', {
-                    path: ''
+                    path: '/'
                 });
-                res.send({
-                    status: 200,
-                    message: '退出成功'
-                });
-                return;
             }
 
-            //如果没有cookie，则认为是退出成功
             res.send({
-                status: 200,
-                message: '退出成功'
+                status: ResInfo._200.status,
+                message: ResInfo._200.msg
             });
         });
     }
