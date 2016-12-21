@@ -1,4 +1,4 @@
-define(function(require, exports, module) { 'use strict' 
+define(function(require, exports, module) { 'use strict'
 	var Vue = require('vue/2.1.x/vue'),
 		util = require('util/1.0.x/util'),
 		MX = require('/vuex/mapmixin');
@@ -32,23 +32,29 @@ define(function(require, exports, module) { 'use strict'
 				this.isLoginModule = btn;
 			},
 			register:function(){
-				var url='./register';
-				var params='username='+this.registerData.email+
-							'&email='+this.registerData.email+
-							'&pwd='+this.registerData.pw;
-				url+='?'+params;
+				// var url='./register';
+				// var params='username='+this.registerData.email+
+				// 			'&email='+this.registerData.email+
+				// 			'&pwd='+this.registerData.pw;
+				// url+='?'+params;
+				// this.$http.get(url).then(function(result){
+	            //     if (result.status === 200) {
+	            //     	this.changeTipMsg("注册成功");
+	            //     	document.getElementById('sectionTip').classList.add('show');
+				//
+	            //     	clearTimeout(sectionTipTimer);
+	            //     	sectionTipTimer = setTimeout(function () {
+	            //     		document.getElementById('sectionTip').classList.remove('show');
+	            //     	},2000);
+				//
+	            //     };
+				// }.bind(this))
+
+				//测试代码--获取简历数据
+				var url='./getResume';
 				this.$http.get(url).then(function(result){
-	                if (result.status === 200) {
-	                	this.changeTipMsg("注册成功");
-	                	document.getElementById('sectionTip').classList.add('show');
-
-	                	clearTimeout(sectionTipTimer);
-	                	sectionTipTimer = setTimeout(function () {
-	                		document.getElementById('sectionTip').classList.remove('show');
-	                	},2000);
-
-	                };
-				}.bind(this));
+	                console.log(result);
+				});
 			},
 			login:function(){
 				var url='./login';

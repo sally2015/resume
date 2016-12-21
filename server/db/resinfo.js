@@ -26,6 +26,10 @@ var ResponseInfo = {
         status:106,
         msg:'参数为空'
     },
+    _107:{
+        status:107,
+        msg:'缺少参数'
+    },
     _200:{
         status:200,
         msg:'success'
