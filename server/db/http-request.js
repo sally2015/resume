@@ -106,7 +106,7 @@ var HttpRequest = {
     },
     uploadImage: function(req, res) {
         var This = this;
-        this.app.get('/uploadImage', function(req, res) {
+        this.app.post('/uploadImage', function(req, res) {
             console.log('uploadImage...');
 
             var form = new Multiparty.Form();

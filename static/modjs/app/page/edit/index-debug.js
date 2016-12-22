@@ -6,11 +6,15 @@ define(function(require, exports, module) { 'use strict'
 		topbarTpl = require('./toolbar_tpl-debug.js'),
 		bodyTpl = require('./body_tpl-debug.js');
 
+		
     var computedMix = util.extend(MX.mapState, MX.mapGetters);
     var methodsMix = util.extend(MX.mapMutations, MX.mapActions);
 	var vm = new Vue({
 		el: '#app',
 		store: store,
+		mounted: function(){
+			
+		},
 		data:function(){
 			return {
 				currentBasicBg: ''

@@ -75,6 +75,9 @@
 	display: inline-block;
 	vertical-align: top;
 }
+.resume-eidt-section__body__basic__contact{
+	padding-left: 30px;
+}
 .resume-eidt-section__body__modules__title{
 	width: 160px;
 	font-size: 24px;

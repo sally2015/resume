@@ -11,7 +11,7 @@ define(function(require, exports, module) { 'use strict'
 				bg:'green'
 			},
 			header:{
-				name:"oby",
+				name:"模板名字",
 				style:{
 					bgColor:'blue',
 					fontSize:30,
@@ -44,7 +44,7 @@ define(function(require, exports, module) { 'use strict'
 					}
 				},
 				avatar:{
-					url:'files/images/test.jpg',
+					url:'images/test.jpg',
 					style:{
 						width:100,
 						height:100,
@@ -212,23 +212,58 @@ define(function(require, exports, module) { 'use strict'
 			return newList;
 		},
 		computedSrc: function(){
-			var url = this.imgSrc ? this.imgSrc : "images/test.jpg",
+
+			var url = this.imgSrc ? this.imgSrc : options.header.avatar.url,
 				index = url.indexOf('images/'),
-				imgPath = 'files/'+url.substring(index);
+				imgPath = url.substring(index);
 				options.header.avatar.url = imgPath;
 
-			return this.imgSrc;
+			return url;
 		}
 	}
 	//自身方法
     var methods = {
-		photoSubmit: function(){
+		photoSubmit: function() {
 			document.getElementById('photoSubmit').click();
 		},
-		uploadImageCallback: function(result){
+		// 图片上传回调
+		uploadImageCallback: function(result) {
+			this.imgSrc =  result.url;
+		},
+		events: function() {
+			var vm = this;
+			window.uploadImageCallbackFunc = function(result){
+				vm.uploadImageCallback(result);
+			}
+			this.onSave();
 			
-			this.imgSrc =  result.url ;
+		},
+		// 保存按钮事件注册
+		onSave: function() {
+			var vm = this,
+			    url = '',
+			    doc = document,
+				sectionTipTimer = null;
+
+			doc.getElementById('save').addEventListener('click', function(){
+
+				options.header.style.bgColor = map.radix[vm.currentBasicBg];
+				url ='./save?'+'data='+encodeURIComponent(JSON.stringify(options));
+				vm.$http.get(url).then(function(result){
+	                if (result.status === 200) {
+	                	vm.changeTipMsg("保存成功");
+	                	doc.getElementById('sectionTip').classList.add('show');
+
+	                	clearTimeout(sectionTip);
+	                	sectionTipTimer = setTimeout(function () {
+	                		doc.getElementById('sectionTip').classList.remove('show');
+	                	},2000);
+
+	                };
+				});
+			});
 		}
+
 	}
 	var computedMix = util.extend(MX.mapState, MX.mapGetters, computedOptions);
 	var methodsMix = util.extend(MX.mapMutations, MX.mapActions, methods);
@@ -236,30 +271,17 @@ define(function(require, exports, module) { 'use strict'
 	var bodyTpl = Vue.extend({
 		template: '#tpl-body',
 		mounted: function(){ //组件初始化
-			var vm = this,
-				sectionTipTimer = null;
-			window.uploadImageCallbackFunc=function(result){
-				vm.uploadImageCallback(result);
-			}
-			document.getElementById('save').addEventListener('click', function(){
-				var url;
-
-				options.header.style.bgColor = map.radix[vm.currentBasicBg];
-
-				url ='./save?'+'data='+encodeURIComponent(JSON.stringify(options));
-				vm.$http.get(url).then(function(result){
-	                if (result.status === 200) {
-	                	vm.changeTipMsg("保存成功");
-	                	document.getElementById('sectionTip').classList.add('show');
-
-	                	clearTimeout(sectionTip);
-	                	sectionTipTimer = setTimeout(function () {
-	                		document.getElementById('sectionTip').classList.remove('show');
-	                	},2000);
-
-	                };
-				});
-			});
+			this.events();
+			// 获取简历数据
+			var url='./getResume';
+			this.$http.get(url).then(function(result){
+				var message = result.body.message;
+					delete message.id;
+					delete message._id;
+	   			if (Object.prototype.toString.call(message) === "[object Object]" ) {
+	   				util.extend(this.options, message);
+	   			};
+			}.bind(this));
 		},
 		data: function(){
 			return {
