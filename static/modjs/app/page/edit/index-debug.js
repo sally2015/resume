@@ -4,7 +4,8 @@ define(function(require, exports, module) { 'use strict'
 		store = require('/vuex/store'),
 		MX = require('/vuex/mapmixin'),
 		topbarTpl = require('./toolbar_tpl-debug.js'),
-		bodyTpl = require('./body_tpl-debug.js');
+		bodyTpl = require('./body_tpl-debug.js'),
+		reviewTpl = require('./review_tpl-debug.js');
 
 		
     var computedMix = util.extend(MX.mapState, MX.mapGetters);
@@ -26,7 +27,8 @@ define(function(require, exports, module) { 'use strict'
 		methods: methodsMix,
 		components: {
 	      'v-topbar': topbarTpl,
-	      'v-body' : bodyTpl
+	      'v-body' : bodyTpl,
+	      'v-review': reviewTpl
 	    }
 	});
 	

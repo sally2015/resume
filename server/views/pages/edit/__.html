@@ -10,6 +10,7 @@
 	<div class="resume-eidt-section">
 		<v-topbar></v-topbar>		
 		<v-body></v-body>
+		<v-review></v-review>
 	</div>
 
 {{/block}}
@@ -17,5 +18,6 @@
 {{#block('beforebodyEnd')}}
 {{ include('./_partials/edit_topbar.html') }}
 {{ include('./_partials/edit_body.html') }}
+{{ include('./_partials/edit_review.html') }}
 <script>require('/page/edit/')</script>
 {{/block}}

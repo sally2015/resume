@@ -200,3 +200,29 @@
 .div-pre span{
 	display:block;
 }
+
+.section-review__wrap {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.9);
+	z-index: 100;
+}
+.section-review__wrap.active{
+	display: block;
+}
+.section-review__content {
+	position: relative;
+	width: 820px;
+	margin: 0 auto;
+	background: #fff;
+	height:100%;
+}
+.section-review__content *{
+	position: absolute;
+	top: 0;
+	left: 0;
+}

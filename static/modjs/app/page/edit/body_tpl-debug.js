@@ -262,6 +262,67 @@ define(function(require, exports, module) { 'use strict'
 	                };
 				});
 			});
+		},
+		// 保存按钮事件注册
+		onPreview: function() {
+			var oSectionContent = document.getElementsByClassName('section-review__content')[0];
+			var oSectionWrap = document.getElementsByClassName('section-review__wrap')[0];
+			oSectionWrap.classList.add('active');
+			var modules = [];
+			var scale = 0.8;
+			for (var index  in options ) {
+				interval(options[index]);
+			} 
+			function interval(option) {
+				var oDiv = document.createElement('div');
+					oSectionContent.appendChild(oDiv);
+				for (var attr in option) {
+					if ( attr === 'name') {
+						var oSpan = document.createElement('span');
+						oSpan.innerHTML = option[attr];
+						modules.push(oSpan);
+					}
+					else if ( attr === 'url' ) {
+						var oImg = document.createElement('img');
+						oImg.src = option[attr];
+						modules.push(oImg);
+					}else if ( attr === 'style' && modules[0]) {
+						var styles = option[attr]; 
+						var oSpan = modules.pop();
+						oDiv.appendChild(oSpan);
+						for (var i in styles){
+							if ( i === 'color') {
+								oSpan.style[i] = styles[i];
+							}else if ( i === 'bgColor') {
+								styles[i] === '#000000' ? (oSpan.style.backgroundColor = 'rgba(0,0,0,0)')
+													 : (oSpan.style.backgroundColor = util.RGBToHex(styles[i]));
+							}else {
+								oSpan.style[i] = styles[i]+'px';
+							}
+					   			
+						}
+					}else if ( attr === 'style' && !modules[0]) {
+						var styles = option[attr]; 
+						for (var i in styles){
+							if ( i === 'color') {
+								oDiv.style[i] = styles[i];
+							}else if ( i === 'bgColor') {
+								styles[i] === '#000000' ? (oDiv.style.backgroundColor = 'rgba(0,0,0,0)')
+													 : (oDiv.style.backgroundColor = util.RGBToHex(styles[i]));
+							}else {
+								oDiv.style[i] = styles[i]+'px';
+							}
+					   			
+						}
+						
+					} else if ( typeof option[attr] === 'object'){
+						interval(option[attr]);
+					}
+
+					
+				}
+			}
+			
 		}
 
 	}

@@ -8,9 +8,6 @@ define(function(require, exports, module) { 'use strict'
 		changeColor: function(color) {
 			this.changeBasicBg(color);
 			this.isIndex = color;
-		},
-		photoSubmit: function(){
-			
 		}
 	}
 	var computedMix = util.extend(MX.mapState, MX.mapGetters);
