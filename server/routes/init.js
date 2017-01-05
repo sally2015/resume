@@ -31,13 +31,12 @@ module.exports = function(express, app) {
 	//处理对应页面的路由
 	util.each(routes, function(subRoutes, mainPath) {
 		var router = express.Router();
-		
 		if (mainPath === '__') {
 			mainPath = '/';
 		} else {
 			mainPath = '/' + mainPath;
 		}
-		
+
 
 		util.each(subRoutes,function(subRoute, subPath ){
 			if ( typeof subRoutes === 'function' || Array.isArray(subRoutes)) {
@@ -87,13 +86,13 @@ module.exports = function(express, app) {
 				subRoute.callbacks.forEach(function(callback){
 					router[verb](pathPattern, callback)
 				});
-			
+
 		});
 
 		app.use(mainPath, router);
 	});
-	
-	
+
+
 	// // catch 404 and forward to error handler
 	// app.use(function(req, res, next) {
 	// 	var err = new Error('404 您访问的页面不存在');

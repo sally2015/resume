@@ -7,8 +7,18 @@ var DB = {
     connectDb: function(callback) {
         var This = this;
 
-        mongoClient.connect('mongodb://localhost:27017/resume', function(err, db) {
+        console.log('------connecting db------');
+        //不用localhost，用IP--不然，MongoError: failed to connect to server [localhost:27017] on first connect
+        mongoClient.connect('mongodb://127.0.0.1:27017/resume', function(err, db) {
             This.db = db;
+
+            if(err){
+                console.log('连接db报错了');
+                console.log(err);
+                return;
+            }
+
+            console.log('------connected------');
 
             if (typeof callback === 'function') {
                 callback(err, db);
@@ -209,8 +219,8 @@ var DB = {
                 });
             } else {
                 callback({
-                    status: ResInfo._104.status,
-                    message: ResInfo._104.msg
+                    status: ResInfo._103.status,
+                    message: ResInfo._103.msg
                 });
             }
         });

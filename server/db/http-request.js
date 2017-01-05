@@ -7,7 +7,7 @@ var Session = require('./session');
 var ResInfo = require('./resinfo');
 var User = require('./user');
 var Resume = require('./resume');
-
+var Filter = require('./filter');
 
 /**
  * HTTP请求对象
@@ -17,29 +17,27 @@ var HttpRequest = {
         this.app = app;
         this.serverPath = serverPath;
     },
+    filter: function() {
+        this.app.get('/edit', function(req, res) {
+            if (!Filter.checkLogin(req, res)) {
+                res.redirect(302, '/');
+                return;
+            }
+        });
+    },
     saveResume: function() {
         var This = this;
         this.app.get('/save', function(req, res) {
-            // if (!Session.isEqual(req)) { //先校验session
-            //     console.log('session is not equal...');
-            //     res.send({
-            //         status: ResInfo._102.status,
-            //         message: ResInfo._102.msg
-            //     });
-            //     return;
-            // }
+            // console.log('saving...');
 
-            // if (!req.cookies.username) {
-            //     res.send({
-            //         status: ResInfo._102.status,
-            //         message: ResInfo._102.msg
-            //     });
-            //     return;
-            // }
+            if (!Filter.checkLogin(req, res)) {
+                return;
+            }
 
             var data = req.query.data;
 
-            console.log('-------save-------');
+            // console.log('-------save-------');
+
             User.getResumeId(decodeURIComponent(req.cookies.username), function(result) {
                 if (result.status === 200) {
                     //此时，data是json格式的字符串
@@ -59,13 +57,9 @@ var HttpRequest = {
     },
     getResume: function() {
         this.app.get('/getResume', function(req, res) {
-            console.log('-------getResume-------');
+            // console.log('-------getResume-------');
 
-            if (!req.cookies.username) {
-                res.send({
-                    status: ResInfo._102.status,
-                    message: ResInfo._102.msg
-                });
+            if (!Filter.checkLogin(req, res)) {
                 return;
             }
 
@@ -86,6 +80,10 @@ var HttpRequest = {
     download: function(req, res) {
         var This = this;
         this.app.get('/download', function(req, res) {
+            if (!Filter.checkLogin(req, res)) {
+                return;
+            }
+
             var data = req.query.data;
 
             DB.get(data, function(result) {
@@ -107,7 +105,11 @@ var HttpRequest = {
     uploadImage: function(req, res) {
         var This = this;
         this.app.post('/uploadImage', function(req, res) {
-            console.log('uploadImage...');
+            // console.log('uploadImage...');
+
+            if (!Filter.checkLogin(req, res)) {
+                return;
+            }
 
             var form = new Multiparty.Form();
 
@@ -190,6 +192,7 @@ var HttpRequest = {
                     if (result.message.pwd === data.pwd) { //校验密码是否相等
                         Session.set({
                             secret: result.message.username
+                                // secret:Date.now()
                         });
                         res.cookie('username', encodeURIComponent(data.username), {
                             expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
@@ -207,8 +210,8 @@ var HttpRequest = {
                     }
                 } else {
                     res.send({
-                        status: ResInfo._104.status,
-                        message: ResInfo._104.msg
+                        status: ResInfo._103.status,
+                        message: ResInfo._103.msg
                     });
                 }
             });
@@ -217,6 +220,10 @@ var HttpRequest = {
     logout: function(req, res) {
         var This = this;
         this.app.get('/logout', function(req, res) {
+            if (!Filter.checkLogin(req, res)) {
+                return;
+            }
+
             Session.destroy(req);
 
             if (req.cookies.username) {
