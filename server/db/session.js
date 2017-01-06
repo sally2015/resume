@@ -16,7 +16,7 @@ var Session = {
     set: function(options) {
         // console.log(options);
         var data = {
-            secret:'12345',
+            secret: Date.now(),
             name: this.sessionName,
             cookie: {
                 //默认一天
@@ -45,28 +45,28 @@ var Session = {
         this.app.use(SESSION(data));
     },
     //判断请求过来的session和服务端这边的是否一致
-    isEqual:function(req){
-        var cookieSession=req.cookies.ESESSIONID;
-        var serverSid=req.session.id;
+    isEqual: function(req) {
+        var cookieSession = req.cookies.ESESSIONID;
+        var serverSid = req.session.id;
 
-        console.log('-------cookieSession--------serverSid-----------');
-        console.log(cookieSession);
-        console.log('');
-        console.log(serverSid)
-        console.log('');
+        // console.log('-------cookieSession--------serverSid-----------');
+        // console.log(cookieSession);
+        // console.log('');
+        // console.log(serverSid)
+        // console.log('');
 
-        cookieSession=cookieSession.substring(2);
-        var cookieSid=cookieSession.substring(0,cookieSession.indexOf('.'));
+        cookieSession = cookieSession.substring(2);
+        var cookieSid = cookieSession.substring(0, cookieSession.indexOf('.'));
 
-        return cookieSid===serverSid?true:false;
+        return cookieSid === serverSid ? true : false;
     },
-    destroy:function(req){
+    destroy: function(req) {
         req.session.destroy(function(err) {
             console.log('-----destroy--------');
-            if(err){
+            if (err) {
                 console.log(err);
             }
-      });
+        });
     }
 };
 

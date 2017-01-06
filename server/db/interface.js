@@ -24,6 +24,7 @@ var Interface = {
     },
     initHttpRequest: function() {
         HttpRequest.init(this.app, this.serverPath);
+        // HttpRequest.filter();
         HttpRequest.saveResume();
         HttpRequest.getResume();
         HttpRequest.download();
